@@ -1,17 +1,27 @@
 package views;
 
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 import models.User;
 
 import java.util.Scanner;
 
-public abstract class View {
-    private static final Scanner scanner = new Scanner(System.in);
+public abstract class View extends Application {
+    public static Stage stage;
     private static User loggedInUser = null;
 
-    protected static Scanner getScanner(){//common scanner in all of the views
-        return View.scanner;
+    public static void setStage(Stage stage) {
+        View.stage = stage;
     }
 
+    public static Stage getStage() {
+        return stage;
+    }
+
+    public static void setScene(Scene scene){
+        stage.setScene(scene);
+    }
     public static void setLoggedInUser(User loggedInUser) {
         View.loggedInUser = loggedInUser;
     }
@@ -19,19 +29,7 @@ public abstract class View {
     public static User getLoggedInUser() {
         return View.loggedInUser;
     }
-    protected String getInput(){//getting inputs from user
-        return View.getScanner().nextLine().trim();
-    }
-    protected String getInput(String dialog){//getting inputs from user and showing a message
-        System.out.println(dialog + ":");
-        return View.getScanner().nextLine().trim();
-    }
 
-    protected String getChoice(){ //getting choice options from user
-        return View.getScanner().nextLine().trim().toLowerCase();
-    }
 
-    public abstract void run();
-    public abstract void showOptions();
-
+    //this class has no controller for now.Currently, it only opens other pages
 }

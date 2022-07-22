@@ -2,6 +2,7 @@ package views;
 
 import controllers.LoginPageController;
 import enums.Dialog;
+import javafx.stage.Stage;
 
 public class LoginPage extends View{
     private static LoginPageController controller = new LoginPageController();
@@ -143,4 +144,8 @@ public class LoginPage extends View{
         }
     }
 
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+
+    }
 }
