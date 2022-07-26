@@ -28,6 +28,18 @@ public class Post extends Media implements Comparable<Post>{
         return posts;
     }
 
+    public void setViewsCount(int viewsCount) {
+        this.viewsCount = viewsCount;
+    }
+
+    public boolean isAd() {
+        return isAd;
+    }
+
+    public void setAd(boolean ad) {
+        isAd = ad;
+    }
+
     public static ArrayList<Post> getComments(String postID){
         ArrayList<Post> comments = DB.getComments(postID);
         Collections.sort(comments);

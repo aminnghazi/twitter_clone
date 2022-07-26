@@ -65,7 +65,11 @@ public class PostsView extends View {
             for (Post post : posts) {
                 i++;
                 System.out.println(i + ". " +post.getSenderUsername()+ ": ");
-                System.out.println("    { " + post.getText() + " }");
+                if (!post.isAd())//normal posts
+                    System.out.println("    { " + post.getText() + " }");
+                else//ads
+                    System.out.println("    { " + post.getText() + " } + (ad)");
+
             }
             String choice = getChoice();
             try {
