@@ -1,0 +1,15 @@
+.root{
+    -fx-background-color:
+            linear-gradient(#4568DC, #B06AB3),
+            repeating-image-pattern("/pics/stars.png"),
+            radial-gradient(center 50% 50%, radius 50%, #FFFFFF33, #00000033);
+}
+.h1 {
+    fx-color: #111;
+    fx-font-family: 'Helvetica Neue', sans-serif;
+    fx-font-size: 275px;
+    fx-font-weight: bold;
+    fx-letter-spacing: -1px;
+    fx-line-height: 1;
+    fx-text-align: center;
+}
