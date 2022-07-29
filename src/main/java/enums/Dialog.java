@@ -16,7 +16,9 @@ public enum Dialog {
     EMPTY_TEXT("Posts text can not be empty"),
     MESSAGE_LIKED("you liked this message"),
     MESSAGE_LIKE_REMOVED("You removed your like"),
-    COMMENT_ADDED_SUCCESSFULLY("Comment added successfully");
+    COMMENT_ADDED_SUCCESSFULLY("Comment added successfully"),
+    DATABASE_NOT_CONNECTED("dataBase connection failed"),
+    DATABASE_CONNECTED("connected to dataBase");
     private String dialog;
 
     Dialog(String dialog){

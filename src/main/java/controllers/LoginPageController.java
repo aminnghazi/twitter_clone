@@ -1,12 +1,13 @@
 package controllers;
 
 import enums.Dialog;
+import models.DB;
 import models.User;
 import views.View;
 
 public class LoginPageController extends Controller{
     public Dialog verifyLogin(String userName, String password) {
-        User user = User.getUserByUserName(userName);
+        User user = DB.getUser(userName);
         if (user == null)
             return Dialog.USER_DOES_NOT_EXIST;
         if (user.getPassword().equals(password)){
@@ -25,19 +26,22 @@ public class LoginPageController extends Controller{
             return dialog;//password problem
         }
         if (type.toLowerCase().equals("normal")){
-            new NormalUser(userName,password,securityQuestion,securityAnswer);
+            User user = new User(userName,password,securityQuestion,securityAnswer,false,null);
+            DB.addUser(user);
             return Dialog.SUCCESS;//normal user created
         }
         if (type.toLowerCase().equals("business")){
-            new BusinessUser(userName,password,securityQuestion,securityAnswer);
+            User user = new User(userName,password,securityQuestion,securityAnswer,true,null);
+            DB.addUser(user);
             return Dialog.SUCCESS;//business user created
         }
         else return Dialog.USER_CREATION_FAILED;
 
     }
     public boolean doesAccountExist(String userName){
-        return User.getUserByUserName(userName) != null;
+        return DB.getUser(userName) != null;
     }
+
     public Dialog validatePassword(String password,String repeatedPassword){
         if (!password.equals(repeatedPassword))
             return Dialog.MISMATCH_PASSWORD;
@@ -48,7 +52,7 @@ public class LoginPageController extends Controller{
         return Dialog.SUCCESS;
     }
     public String getSecurityQuestion(String userName){
-        User user = User.getUserByUserName(userName);
+        User user = DB.getUser(userName);
         if (user == null)
             return null;
         String question = user.getSecurityQuestion();
@@ -64,7 +68,7 @@ public class LoginPageController extends Controller{
         }
     }
     public Dialog forgotPassword(String userName,String answer) {
-        User user = User.getUserByUserName(userName);
+        User user = DB.getUser(userName);
         if (user == null)
             return Dialog.USER_DOES_NOT_EXIST;
 
@@ -79,9 +83,11 @@ public class LoginPageController extends Controller{
         Dialog dialog = validatePassword(password, repeatedPassword);
         if (dialog != Dialog.SUCCESS)
             return dialog;
-        User user = User.getUserByUserName(userName);
+        User user = DB.getUser(userName);
         if (user != null) {
-            user.setPassword(password);
+            DB.editPassword(userName, password);
+            // TODO: 7/29/2022 add dialog 
+//            user.setPassword(password);
             return Dialog.SUCCESS;
         }
         return Dialog.OPERATION_FAILED;

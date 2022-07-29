@@ -1,42 +1,87 @@
 package models;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public abstract class User {
+public class User {
 
-    private final String Date_created;
+    private LocalDate joinDate;
+    private LocalDate birthDate;
     private String userName;
-    private String password;// TODO: 7/18/2022 add bio 
+    private String password;// TODO: 7/18/2022 add bio
     private String profilePicture;
-//    private String bio;
-    private boolean isBusiness;
     private String securityQuestion;
     private String securityAnswer;
+    private String firstName;
+    private String lastName;
 
 
-    public User(String userName, String password, String securityQuestionType, String securityQuestionAnswer){
+
+    public User(String userName, String password, String securityQuestionType, String securityQuestionAnswer, boolean isBusiness, String profilePicture){
         this.userName=userName;
         this.password=password;
         this.securityQuestion=securityQuestionType;
         this.securityAnswer =securityQuestionAnswer;
-        LocalDateTime currentTime = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd : HH:mm:ss");
-        Date_created = currentTime.format(formatter);
-        DB.allUsers.add(this);// TODO: 7/18/2022 replace with data base
+        this.isBusiness = isBusiness;
+        this.joinDate = LocalDate.now();
+        this.birthDate = LocalDate.now();// TODO: 7/30/2022 change with real one
+        this.firstName = "name";// TODO: 7/30/2022
+        this.lastName = "last Name";// TODO: 7/30/2022
+        if (profilePicture == null)
+            profilePicture = "-1";
+        else this.profilePicture = profilePicture;
+//        LocalDateTime currentTime = LocalDateTime.now();
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd : HH:mm:ss");
+//        joinDate = currentTime.format(formatter);
+
     }
 
-    public static User getUserByUserName(String userName){//may return null
-        // TODO: 7/18/2022 replace with data base code
-        for (User user : DB.allUsers) {
-            if (user.userName.equals(userName))
-                return user;
-        }
-        return null;
+    private boolean isBusiness;
+
+
+//    public static User getUserByUserName(String userName){//may return null
+//        for (User user : DB.allUsers) {
+//            if (user.userName.equals(userName))
+//                return user;
+//        }
+//        return null;
+//    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
-    public String getDate_created() {
-        return Date_created;
+    public void setProfilePicture(String profilePicture) {
+        this.profilePicture = profilePicture;
+    }
+
+    public void setBusiness(boolean business) {
+        isBusiness = business;
+    }
+
+    public void setSecurityQuestion(String securityQuestion) {
+        this.securityQuestion = securityQuestion;
+    }
+
+    public void setSecurityAnswer(String securityAnswer) {
+        this.securityAnswer = securityAnswer;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getUserName() {
@@ -69,5 +114,21 @@ public abstract class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public LocalDate getJoinDate() {
+        return joinDate;
+    }
+
+    public void setJoinDate(LocalDate joinDate) {
+        this.joinDate = joinDate;
+    }
+
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
     }
 }
