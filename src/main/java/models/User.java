@@ -18,18 +18,23 @@ public class User {
 
 
 
-    public User(String userName, String password, String securityQuestionType, String securityQuestionAnswer, boolean isBusiness){
+    public User(String userName, String password, String securityQuestionType, String securityQuestionAnswer, boolean isBusiness, String profilePicture){
         this.userName=userName;
         this.password=password;
         this.securityQuestion=securityQuestionType;
         this.securityAnswer =securityQuestionAnswer;
         this.isBusiness = isBusiness;
         this.joinDate = LocalDate.now();
+        this.birthDate = LocalDate.now();// TODO: 7/30/2022 change with real one
+        this.firstName = "name";// TODO: 7/30/2022
+        this.lastName = "last Name";// TODO: 7/30/2022
+        if (profilePicture == null)
+            profilePicture = "-1";
+        else this.profilePicture = profilePicture;
 //        LocalDateTime currentTime = LocalDateTime.now();
 //        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd : HH:mm:ss");
 //        joinDate = currentTime.format(formatter);
 
-        DB.addUser(this);
     }
 
     private boolean isBusiness;

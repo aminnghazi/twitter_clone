@@ -1,5 +1,7 @@
 package models;
 
+import enums.Dialog;
+
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,7 +12,12 @@ import java.lang.*;
 
 public class DB {
     private static Statement statement;
-    static void addUser(User user){
+    public static void addUser(User user){
+        short a;
+        if (user.isBusiness())
+            a=1;
+        else
+            a = 0;
         try {
             statement.executeUpdate("INSERT INTO user (UserName,Password,JointDate,BirthDate,FirstName,LastName,Business,ProfilePicture,securityQuestionType,securityQuestionAnswer)" +
                     " VALUES ('"
@@ -19,43 +26,45 @@ public class DB {
                     +LocalDate.now()+"','"
                     +user.getBirthDate()+"','"
                     +user.getFirstName()+"','"
-                    +user.getLastName()+"',"
-                    +user.isBusiness()+","
-                    +((user.getProfilePicture().isEmpty())? "null,":"'"+user.getProfilePicture()+ "'")
+                    +user.getLastName()+"','"
+                    +a+"','"+
+                    user.getProfilePicture()+"','"
+//                    +((user.getProfilePicture().isEmpty())? "null,":"'"+user.getProfilePicture()+ "'")
                     +user.getSecurityQuestion()+"','"
                     +user.getSecurityAnswer()
-                    + "'')"
+                    + "')"
             );
-            // TODO: 7/29/2022 may be wrong 
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    static User getUser(String userName) {
+    public static User getUser(String userName) {
         User user = null;
         try{
             ResultSet  resultSet = statement.executeQuery("SELECT*FROM user WHERE UserName='"+userName+"'");
             resultSet.next();
-            user = new User(resultSet.getString("UserName"), resultSet.getString("Password"), resultSet.getString("securityQuestionType"), resultSet.getString("securityQuestionAnswer"),resultSet.getBoolean("Business"));
+            user = new User(resultSet.getString("UserName"), resultSet.getString("Password"), resultSet.getString("securityQuestionType"),
+                    resultSet.getString("securityQuestionAnswer"),resultSet.getBoolean("Business"),resultSet.getString("ProfilePicture"));
             user.setFirstName(resultSet.getString("FirstName"));
             user.setLastName(resultSet.getString("LastName"));
             user.setJoinDate(resultSet.getDate("JointDate").toLocalDate());
             user.setBirthDate(resultSet.getDate("BirthDate").toLocalDate());
-            user.setProfilePicture(resultSet.getString("ProfilePicture"));
+//            user.setProfilePicture(resultSet.getString("ProfilePicture"));
         }catch (SQLException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
         return user;
     }
-    static void deleteUser(String userName){
+    public static void deleteUser(String userName){
         try {
             statement.executeUpdate("DELETE FROM user WHERE UserName='"+userName+"'");
         } catch (SQLException e) {
+            System.out.println("ooo");
             e.printStackTrace();
         }
     }
-    static ArrayList<User> getAllUsers(){
+    public static ArrayList<User> getAllUsers(){
         ArrayList<String> userNames = getAllUserNames();
         ArrayList<User> users = new ArrayList<>();
         for(int i=0; i< userNames.size(); i++){
@@ -63,7 +72,7 @@ public class DB {
         }
         return users;
     }
-    static ArrayList<String> getAllUserNames(){
+    public static ArrayList<String> getAllUserNames(){
         ArrayList<String> userNames = new ArrayList<>();
         try {
             ResultSet resultSet = statement.executeQuery("SELECT*FROM user");
@@ -75,7 +84,7 @@ public class DB {
         }
         return userNames;
     }
-    static void addPost(Post post){
+    public static void addPost(Post post){
         try {
             statement.executeUpdate("INSERT INTO post (ParentID,PostText,PostImage,SenderID,CreateDate,viewsCount,likesCount,isAdd)" +
                     " VALUES ('"
@@ -92,7 +101,7 @@ public class DB {
             e.printStackTrace();
         }
     }
-    static Post getPost(int postID){
+    public static Post getPost(String postID){
         Post post = null;
         try {
             ResultSet resultSet = statement.executeQuery("SELECT*FROM post WHERE PostID='"+postID+"'");
@@ -105,54 +114,54 @@ public class DB {
         }
         return post;
     }
-    static ArrayList<Integer> getUserPostIDs(String userName){
-        ArrayList<Integer> postIDs = new ArrayList<>();
+    public static ArrayList<String> getUserPostIDs(String userName){
+        ArrayList<String> postIDs = new ArrayList<>();
         try {
             ResultSet resultSet = statement.executeQuery("SELECT*FROM post WHERE SenderID='"+userName+"'");
             while(resultSet.next()){
-                postIDs.add(resultSet.getInt("PostID"));
+                postIDs.add(resultSet.getString("PostID"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return postIDs;
     }
-    static ArrayList<Post> getUserPosts(String userName){
+    public static ArrayList<Post> getUserPosts(String userName){
         ArrayList<Post> posts = new ArrayList<>();
-        ArrayList<Integer> postIDs = getUserPostIDs(userName);
+        ArrayList<String> postIDs = getUserPostIDs(userName);
         for(int i=0; i< postIDs.size(); i++){
             posts.add(getPost(postIDs.get(i)));
         }
         return posts;
     }
-    static ArrayList<Integer> getAllPostIDs(){
-        ArrayList<Integer> postIDs = new ArrayList<>();
+    public static ArrayList<String> getAllPostIDs(){
+        ArrayList<String> postIDs = new ArrayList<>();
         try {
             ResultSet resultSet = statement.executeQuery("SELECT*FROM post");
             while(resultSet.next()){
-                postIDs.add(resultSet.getInt("PostID"));
+                postIDs.add(resultSet.getString("PostID"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return postIDs;
     }
-    static ArrayList<Post> getAllPosts(){
+    public static ArrayList<Post> getAllPosts(){
         ArrayList<Post> posts = new ArrayList<>();
-        ArrayList<Integer> postIDs = getAllPostIDs();
+        ArrayList<String> postIDs = getAllPostIDs();
         for(int i=0; i< postIDs.size(); i++){
             posts.add(getPost(postIDs.get(i)));
         }
         return posts;
     }
-    static void deletePost(int postID){
+    public static void deletePost(String postID){
         try {
             statement.executeUpdate("DELETE FROM Post WHERE PostID='"+postID+"'");
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    static ArrayList<Post> getFollowingsPost(String userName){
+    public static ArrayList<Post> getFollowingsPost(String userName){
         ArrayList<String> followings= getFollowings(userName);
         ArrayList<Post> allFollowingPost = new ArrayList<Post>();
         for(int i=0; i<followings.size(); i++){
@@ -160,7 +169,7 @@ public class DB {
         }
         return allFollowingPost;
     }
-    static ArrayList<Post> getComments(String parentID){
+    public static ArrayList<Post> getComments(String parentID){
         ArrayList<Post> posts = getAllPosts();
         for (Post post : posts) {
          if (post.getParentID().equals(parentID))
@@ -169,14 +178,14 @@ public class DB {
         return posts;
     }
 
-    static void editPost(int postID, String newText,String newPostImage){
+    public static void editPost(String postID, String newText,String newPostImage){
         try {
             statement.executeUpdate("UPDATE post SET Text='"+newText+"' AND PostImage='"+newPostImage+"' WHERE PostID='"+postID+"'");
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    static void addLike(int postID, String userName){
+    public static void addLike(String postID, String userName){
         try {
             statement.executeUpdate("INSERT INTO like (PostID,LikeDate,LikeUserID) " +
                     "VALUES ('"
@@ -188,14 +197,14 @@ public class DB {
             e.printStackTrace();
         }
     }
-    static void removeLike(int postID, String userName){
+    public static void removeLike(String postID, String userName){
         try {
             statement.executeUpdate("DELETE FROM Like WHERE PostID='"+postID+"' AND LikeUserID='"+userName+"'");
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    static boolean isLikedBy(String userName, String postID){
+    public static boolean isLikedBy(String userName, String postID){
         boolean is = false;
         try {
             ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) FROM like WHERE UserName='"+userName+"' AND PostID='"+postID+"'");
@@ -211,7 +220,7 @@ public class DB {
         }
         return is;
     }
-    static int getLikesCount(String postID){
+    public static int getLikesCount(String postID){
         int count = 0;
         try {
             ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) FROM like WHERE UserName='"+postID+"'");
@@ -222,7 +231,7 @@ public class DB {
         }
         return count;
     }
-    static ArrayList<java.time.LocalDate> getLikesDate(int postID){
+    public static ArrayList<java.time.LocalDate> getLikesDate(String postID){
         ArrayList<java.time.LocalDate> dates = new ArrayList<>();
         try {
             ResultSet resultSet = statement.executeQuery("SELECT LikeDate FROM like WHERE PostID='"+postID+"'");
@@ -234,7 +243,7 @@ public class DB {
         }
         return dates;
     }
-    static ArrayList<String> getFollowers(String userName){
+    public static ArrayList<String> getFollowers(String userName){
         ArrayList<String> followers = new ArrayList<>();
         try {
             ResultSet resultSet = statement.executeQuery("SELECT Follower FROM follow WHERE Following='"+userName+"'");
@@ -246,7 +255,7 @@ public class DB {
         }
         return followers;
     }
-    static ArrayList<String> getFollowings(String userName){
+    public static ArrayList<String> getFollowings(String userName){
         ArrayList<String> followings = new ArrayList<>();
 
         try {
@@ -259,7 +268,7 @@ public class DB {
         }
         return followings;
     }
-    static void Follow(String userName, String userName1){
+    public static void Follow(String userName, String userName1){
         try {
             statement.executeUpdate("INSERT INTO follow (FollowingID,FollowerID,FollowDate) " +
                     "VALUES ("
@@ -271,14 +280,14 @@ public class DB {
             e.printStackTrace();
         }
     }
-    static void UnFollow(String userName, String userName1){
+    public static void UnFollow(String userName, String userName1){
         try {
             statement.executeUpdate("DELETE FROM follow WHERE Follower='"+userName+"' AND Following='"+userName1+"'");
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    static int getFollowerCount(String userName){
+    public static int getFollowerCount(String userName){
         int count = 0;
         try {
             ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) FROM View WHERE Follower='"+userName+"'");
@@ -289,7 +298,7 @@ public class DB {
         }
         return count;
     }
-    static int getFollowingCount(String userName){
+    public static int getFollowingCount(String userName){
         int count = 0;
         try {
             ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) FROM View WHERE Follower='"+userName+"'");
@@ -300,7 +309,7 @@ public class DB {
         }
         return count;
     }
-    static void addView(String postID, String userName){
+    public static void addView(String postID, String userName){
         try {
             statement.executeUpdate("INSERT INTO like (PostID,ViewDate,ViewUserID) " +
                     "VALUES ('"
@@ -312,7 +321,7 @@ public class DB {
             e.printStackTrace();
         }
     }
-    static boolean isViewedBy(String userName, String postID){
+    public static boolean isViewedBy(String userName, String postID){
         boolean is = false;
         try {
             ResultSet resultSet = statement.executeQuery("SELECT 1 FROM view WHERE LikeUserID='"+userName+"' AND PostID='"+postID+"'");
@@ -328,7 +337,7 @@ public class DB {
         }
         return is;
     }
-    static int getViewsCount(String postID, Statement statement){
+    public static int getViewsCount(String postID, Statement statement){
         int count = 0;
         try {
             ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) FROM View WHERE PostID='"+postID+"'");
@@ -339,7 +348,7 @@ public class DB {
         }
         return count;
     }
-    static ArrayList<java.time.LocalDate> getViewsDate(Statement statement){
+    public static ArrayList<java.time.LocalDate> getViewsDate(Statement statement){
         ArrayList<java.time.LocalDate> dates = new ArrayList<>();
         try {
             ResultSet resultSet = statement.executeQuery("SELECT ViewDate FROM view");
@@ -351,7 +360,7 @@ public class DB {
         }
         return dates;
     }
-    static void createGroup(String groupID, String ownerID, String groupName, boolean isGroup, Statement statement){
+    public static void createGroup(String groupID, String ownerID, String groupName, boolean isGroup, Statement statement){
         try {
             statement.executeUpdate("INSERT INTO group (GroupID,OwnerID,CreateDate,GroupName,isGroup) " +
                     "VALUES ('"
@@ -365,7 +374,7 @@ public class DB {
             e.printStackTrace();
         }
     }
-    static String getGroupName(String groupID, Statement statement){
+    public static String getGroupName(String groupID, Statement statement){
         String groupName = "";
         try {
             ResultSet resultSet = statement.executeQuery("SELECT GroupName FROM group WHERE GroupID='"+groupID+"'");
@@ -376,14 +385,14 @@ public class DB {
         }
         return groupName;
     }
-    static void changeGroupName(String groupID, String newGroupName, Statement statement){
+    public static void changeGroupName(String groupID, String newGroupName, Statement statement){
         try {
             statement.executeUpdate("UPDATE group SET GroupName='"+newGroupName+"' WHERE GroupID='"+groupID+"'");
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    static boolean isGroup(String groupID, Statement statement){
+    public static boolean isGroup(String groupID, Statement statement){
         boolean is = false;
         try {
             ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) FROM group WHERE GroupID='"+groupID+"'");
@@ -399,7 +408,7 @@ public class DB {
         }
         return is;
     }
-    static void addMember(String groupID, String memberID, boolean isAdmin, Statement statement){
+    public static void addMember(String groupID, String memberID, boolean isAdmin, Statement statement){
         try {
             statement.executeUpdate("INSERT INTO group (GroupID,MemberID,JoinDate,isAdmin) " +
                     "VALUES ('"
@@ -412,14 +421,14 @@ public class DB {
             e.printStackTrace();
         }
     }
-    static void deleteMember(String groupID, String memberID, Statement statement){
+    public static void deleteMember(String groupID, String memberID, Statement statement){
         try {
             statement.executeUpdate("DELETE FROM member WHERE GroupID='"+groupID+"' AND MemberID='"+memberID+"'");
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    static ArrayList<String> getGroups(String userName, Statement statement){
+    public static ArrayList<String> getGroups(String userName, Statement statement){
         ArrayList<String> groups = new ArrayList<>();
         try {
             ResultSet resultSet = statement.executeQuery("SELECT GroupID FROM group WHERE MemberID="+userName);
@@ -431,7 +440,7 @@ public class DB {
         }
         return groups;
     }
-    static ArrayList<String> getMembers(String groupID, Statement statement){
+    public static ArrayList<String> getMembers(String groupID, Statement statement){
         ArrayList<String> members = new ArrayList<>();
         try {
             ResultSet resultSet = statement.executeQuery("SELECT MemberID FROM group WHERE GroupID="+groupID);
@@ -443,7 +452,7 @@ public class DB {
         }
         return members;
     }
-    static void addMessage(String groupID, String senderID, String photoID, String text, Statement statement){
+    public static void addMessage(String groupID, String senderID, String photoID, String text, Statement statement){
         try {
             statement.executeUpdate("INSERT INTO message (GroupID,SenderID,SentDate,PhotoMessage,Text) " +
                     "VALUES ('"
@@ -458,56 +467,53 @@ public class DB {
             e.printStackTrace();
         }
     }
-    static void editMessage(int messageID,String text, String photoID){
+    public static void editMessage(int messageID,String text, String photoID){
         try {
             statement.executeUpdate("UPDATE message SET Text='"+text+"' PhotoMessage='"+photoID+"'+ WHERE MessageID='"+messageID+"'");
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    static void deleteMessage(int messageID){
+    public static void deleteMessage(int messageID){
         try {
             statement.executeUpdate("DELETE FROM message WHERE MessageID='"+messageID+"'");
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    static void editPassword(String userName,String newPassword){
+    public static void editPassword(String userName,String newPassword){
         try {
             statement.executeUpdate("UPDATE user SET Password='"+newPassword+"' WHERE UserName='"+userName+"'");
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    static void editFirstName(String userName,String firstName){
+    public static void editFirstName(String userName,String firstName){
         try {
             statement.executeUpdate("UPDATE user SET FirstName='"+firstName+"' WHERE UserName='"+userName+"'");
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    static void editLastName(String userName,String lastName){
+    public static void editLastName(String userName,String lastName){
         try {
             statement.executeUpdate("UPDATE user SET LastName='"+lastName+"' WHERE UserName='"+userName+"'");
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    static void editProfilePicture(String userName,String profilePicture){
+    public static void editProfilePicture(String userName,String profilePicture){
         try {
             statement.executeUpdate("UPDATE user SET ProfilePicture='"+profilePicture+"' WHERE UserName='"+userName+"'");
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    public static void main(String[] args){
+    public static Dialog start(){
         try {
             java.sql.Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/jdbc","root","");
             statement = connection.createStatement();
-
-
-
-
+            return Dialog.DATABASE_CONNECTED;
 //            statement.executeUpdate("DELETE FROM account WHERE Followers='FHJHF' AND Followings='FHHBT'");
 //            System.out.println("Deleted successfully");
 
@@ -534,7 +540,9 @@ public class DB {
 //            }
         } catch (SQLException e) {
             e.printStackTrace();
+            System.out.println(Dialog.DATABASE_NOT_CONNECTED);
             //System.out.println("nohr");
         }
+        return Dialog.OPERATION_FAILED;
     }
 }

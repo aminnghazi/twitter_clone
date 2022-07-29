@@ -23,7 +23,14 @@ public class PostsViewController extends Controller{
         return Post.getAllPosts();
     }
     public Dialog handleLikingPost(String userName, String postID){
-        return DB.Like(userName, postID);
+        // TODO: 7/29/2022 add dialog
+        if (DB.isLikedBy(userName, postID)) {
+            DB.addLike(userName, postID);
+            return Dialog.MESSAGE_LIKED;// TODO: 7/29/2022 change with right dialog
+        }else {
+            DB.removeLike(postID, userName);
+            return Dialog.MESSAGE_LIKED;
+        }
     }
 
     public ArrayList<Post> handleSeeComments(String postID) {
