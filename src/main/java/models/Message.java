@@ -5,4 +5,5 @@ public class Message extends Media{
         super(senderUsername, image, text, parentID);
         // TODO: 7/21/2022 add message feature
     }
+
 }
