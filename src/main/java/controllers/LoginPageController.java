@@ -1,8 +1,6 @@
 package controllers;
 
 import enums.Dialog;
-import models.BusinessUser;
-import models.NormalUser;
 import models.User;
 import views.View;
 

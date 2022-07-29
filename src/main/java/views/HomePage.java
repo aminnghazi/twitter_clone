@@ -26,12 +26,16 @@ public class HomePage extends View{
                 suggestionsView.run();
                 break;
             case "4":
+            case "message":
+
+            case "5":
             case "exit":
                 return;
             default:
                 System.out.println(Dialog.INVALID_CHOICE);
                 run();// TODO: 7/21/2022 delete loop in phase 2 
         }
+        run();
     }
 
     @Override
