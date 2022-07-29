@@ -57,9 +57,9 @@ public class PostsView extends View {
                 System.out.println(Messages.NO_COMMENTS_TO_SHOW);
        }else {
             if (!isComment)
-                System.out.println("Choose a post number to interact:");
+                System.out.println("Choose a post number to interact(0 to exit):");
             else
-                System.out.println("Choose a comment number to interact:");
+                System.out.println("Choose a comment number to interact(0 to exit):");
 
             int i = 0;
             for (Post post : posts) {
@@ -68,17 +68,18 @@ public class PostsView extends View {
                 if (!post.isAd())//normal posts
                     System.out.println("    { " + post.getText() + " }");
                 else//ads
-                    System.out.println("    { " + post.getText() + " } + (ad)");
+                    System.out.println("    { " + post.getText() + " }  (ad)");
 
             }
             String choice = getChoice();
-            try {
-                int postNumber = Integer.parseInt(choice)-1;
-                postOptions(posts.get(postNumber));
-            }catch (Exception e){
-                System.out.println(Dialog.INVALID_CHOICE);
-            }
-        }
+            if (!choice.equals("0")) {
+                try {
+                    int postNumber = Integer.parseInt(choice) - 1;
+                    postOptions(posts.get(postNumber));
+                } catch (Exception e) {
+                    System.out.println(Dialog.INVALID_CHOICE);
+                }
+            }}
         run();//loop
     }
 
