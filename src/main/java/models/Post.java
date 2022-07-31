@@ -2,20 +2,19 @@ package models;
 
 import views.View;
 
+import java.time.DateTimeException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Post extends Media {
     private int viewsCount;
     private boolean isAd;
 
-    public Post(String senderUsername, String image, String text,String parentID) {
+    public Post(String senderUsername, String image, String text,String parentID,boolean isAd) {
         super(senderUsername, image, text, parentID);
-        this.viewsCount = 0;
-        if (View.getLoggedInUser().isBusiness())
-            isAd = true;
-        else
-            isAd = false;
-        DB.addPost(this);
+        this.isAd = isAd;
 //        DB.allPosts.add(this);
     }
     public static ArrayList<Post> getAllPosts(){
@@ -47,6 +46,14 @@ public class Post extends Media {
 //        Collections.sort(comments);
         // TODO: 7/29/2022 sort by date 
         return comments;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + "Post{" +
+                "viewsCount=" + viewsCount +
+                ", isAd=" + isAd +
+                '}';
     }
 
 //    @Override

@@ -2,17 +2,14 @@ package models;
 
 import enums.Dialog;
 
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.time.LocalDate;
+import java.sql.*;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.lang.*;
 
 public class DB {
     private static Statement statement;
-    public static void addUser(User user){
+    public static Dialog addUser(User user){
         short a;
         if (user.isBusiness())
             a=1;
@@ -23,7 +20,7 @@ public class DB {
                     " VALUES ('"
                     +user.getUserName()+"','"
                     +user.getPassword()+"','"
-                    +LocalDate.now()+"','"
+                    + Timestamp.from(Instant.now())+"','"//kal
                     +user.getBirthDate()+"','"
                     +user.getFirstName()+"','"
                     +user.getLastName()+"','"
@@ -34,9 +31,12 @@ public class DB {
                     +user.getSecurityAnswer()
                     + "')"
             );
+            return Dialog.SUCCESS;
         } catch (SQLException e) {
             e.printStackTrace();
+            return Dialog.USER_CREATION_FAILED;
         }
+
     }
 
     public static User getUser(String userName) {
@@ -48,7 +48,8 @@ public class DB {
                     resultSet.getString("securityQuestionAnswer"),resultSet.getBoolean("Business"),resultSet.getString("ProfilePicture"));
             user.setFirstName(resultSet.getString("FirstName"));
             user.setLastName(resultSet.getString("LastName"));
-            user.setJoinDate(resultSet.getDate("JointDate").toLocalDate());
+            Timestamp ts = new Timestamp(resultSet.getDate("JointDate").getTime());//kal
+            user.setJoinDate(ts);//kal
             user.setBirthDate(resultSet.getDate("BirthDate").toLocalDate());
 //            user.setProfilePicture(resultSet.getString("ProfilePicture"));
         }catch (SQLException e) {
@@ -56,11 +57,13 @@ public class DB {
         }
         return user;
     }
-    public static void deleteUser(String userName){
+    public static Dialog deleteUser(String userName){
         try {
             statement.executeUpdate("DELETE FROM user WHERE UserName='"+userName+"'");
+            return Dialog.SUCCESS;
         } catch (SQLException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
+            return Dialog.OPERATION_FAILED;
         }
     }
     public static ArrayList<User> getAllUsers(){
@@ -71,6 +74,7 @@ public class DB {
         }
         return users;
     }
+
     public static ArrayList<String> getAllUserNames(){
         ArrayList<String> userNames = new ArrayList<>();
         try {
@@ -83,31 +87,40 @@ public class DB {
         }
         return userNames;
     }
-    public static void addPost(Post post){
+
+    public static Dialog addPost(Post post){
+        int a;
+        if (post.isAd()==false)
+            a = 0;
+        else
+            a =1;
         try {
-            statement.executeUpdate("INSERT INTO post (ParentID,PostText,PostImage,SenderID,CreateDate,viewsCount,likesCount,isAdd)" +
+            statement.executeUpdate("INSERT INTO post (ParentID,PostText,PostImage,SenderID,CreateDate,isAdd,postID)" +
                     " VALUES ('"
                     +post.getParentID()+"','"
-                    +post.getText()+"',"
-                    +((post.getImage().isEmpty())? "null,":"'"+post.getImage()+ "'")+",'"
+                    +post.getText()+"','"
+                    +post.getImage()+"','"
+//                    +((post.getImage().isEmpty())? "null,":"'"+post.getImage()+ "'")+",'"
                     +post.getSenderUsername()+"','"
-                    +post.getDateCreated()+"','"
-                    +"0','"
-                    +"0',"
-                    +post.isAd()
+                    +Timestamp.from(Instant.now())+"','"//kal
+                    +a+"','"
+                    +post.getSenderUsername()+ Long.toString(Instant.now().toEpochMilli())+"'"
                     +")" );
+            return Dialog.SUCCESS;
         } catch (SQLException e) {
             e.printStackTrace();
+            return Dialog.OPERATION_FAILED;
         }
     }
     public static Post getPost(String postID){
         Post post = null;
         try {
-            ResultSet resultSet = statement.executeQuery("SELECT*FROM post WHERE PostID='"+postID+"'");
+            ResultSet resultSet = statement.executeQuery("SELECT*FROM post WHERE postID='"+postID+"'");
             resultSet.next();
-            post = new Post(resultSet.getString("SenderID"), resultSet.getString("PostImage"), resultSet.getString("PostText"), resultSet.getString("ParentID"));
-            post.setDateCreated(resultSet.getDate("CreateDate"));
-            post.setAd(resultSet.getBoolean("isAdd"));
+            post = new Post(resultSet.getString("SenderID"), resultSet.getString("PostImage"), resultSet.getString("PostText"), resultSet.getString("ParentID"),resultSet.getBoolean("isAdd"));
+            Timestamp ts = new Timestamp(resultSet.getDate("CreateDate").getTime());//kal
+            post.setDateCreated(ts);//kal
+            post.setID(resultSet.getString("postID"));
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -116,7 +129,7 @@ public class DB {
     public static ArrayList<String> getUserPostIDs(String userName){
         ArrayList<String> postIDs = new ArrayList<>();
         try {
-            ResultSet resultSet = statement.executeQuery("SELECT*FROM post WHERE SenderID='"+userName+"'");
+            ResultSet resultSet = statement.executeQuery("SELECT*FROM post WHERE SenderID='"+userName+"'" + "ORDER BY sqlID DESC");
             while(resultSet.next()){
                 postIDs.add(resultSet.getString("PostID"));
             }
@@ -136,7 +149,7 @@ public class DB {
     public static ArrayList<String> getAllPostIDs(){
         ArrayList<String> postIDs = new ArrayList<>();
         try {
-            ResultSet resultSet = statement.executeQuery("SELECT*FROM post");
+            ResultSet resultSet = statement.executeQuery("SELECT*FROM post ORDER BY sqlID DESC");
             while(resultSet.next()){
                 postIDs.add(resultSet.getString("PostID"));
             }
@@ -153,11 +166,13 @@ public class DB {
         }
         return posts;
     }
-    public static void deletePost(String postID){
+    public static Dialog deletePost(String postID){
         try {
             statement.executeUpdate("DELETE FROM Post WHERE PostID='"+postID+"'");
+            return Dialog.SUCCESS;
         } catch (SQLException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
+            return Dialog.OPERATION_FAILED;
         }
     }
     public static ArrayList<Post> getFollowingsPost(String userName){
@@ -177,11 +192,13 @@ public class DB {
         return posts;
     }
 
-    public static void editPost(String postID, String newText,String newPostImage){
+    public static Dialog editPost(String postID, String newText,String newPostImage){
         try {
             statement.executeUpdate("UPDATE post SET Text='"+newText+"' AND PostImage='"+newPostImage+"' WHERE PostID='"+postID+"'");
+            return Dialog.SUCCESS;
         } catch (SQLException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
+            return Dialog.OPERATION_FAILED;
         }
     }
     public static void addLike(String postID, String userName){
@@ -189,19 +206,21 @@ public class DB {
             statement.executeUpdate("INSERT INTO like (PostID,LikeDate,LikeUserID) " +
                     "VALUES ('"
                     +postID+"','"
-                    + LocalDate.now()+"','"
+                    +Timestamp.from(Instant.now())+"','"//kal
                     +userName+"')"
             );
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    public static void removeLike(String postID, String userName){
+    public static Dialog removeLike(String postID, String userName){
         try {
             statement.executeUpdate("DELETE FROM Like WHERE PostID='"+postID+"' AND LikeUserID='"+userName+"'");
         } catch (SQLException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
+            return Dialog.SUCCESS;
         }
+        return Dialog.OPERATION_FAILED;
     }
     public static boolean isLikedBy(String userName, String postID){
         boolean is = false;
@@ -230,12 +249,14 @@ public class DB {
         }
         return count;
     }
-    public static ArrayList<java.time.LocalDate> getLikesDate(String postID){
-        ArrayList<java.time.LocalDate> dates = new ArrayList<>();
+    public static ArrayList<Timestamp> getLikesDate(int postID){
+        ArrayList<Timestamp> dates = new ArrayList<>();
         try {
             ResultSet resultSet = statement.executeQuery("SELECT LikeDate FROM like WHERE PostID='"+postID+"'");
+            Timestamp ts;//kal
             while (resultSet.next()){
-                dates.add(resultSet.getDate("LikeDate").toLocalDate());
+                ts = new Timestamp(resultSet.getDate("LikeDate").getTime());//kal
+                dates.add(ts);//kal
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -245,9 +266,9 @@ public class DB {
     public static ArrayList<String> getFollowers(String userName){
         ArrayList<String> followers = new ArrayList<>();
         try {
-            ResultSet resultSet = statement.executeQuery("SELECT Follower FROM follow WHERE Following='"+userName+"'");
+            ResultSet resultSet = statement.executeQuery("SELECT FollowerID FROM follow WHERE FollowingID='"+userName+"'");
             while (resultSet.next()){
-                followers.add(resultSet.getString("Follower"));
+                followers.add(resultSet.getString("FollowerID"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -258,38 +279,42 @@ public class DB {
         ArrayList<String> followings = new ArrayList<>();
 
         try {
-            ResultSet resultSet = statement.executeQuery("SELECT Following FROM follow WHERE Follower='"+userName+"'");
+            ResultSet resultSet = statement.executeQuery("SELECT FollowingID FROM follow WHERE FollowerID='"+userName+"'");
             while (resultSet.next()){
-                followings.add(resultSet.getString("Following"));
+                followings.add(resultSet.getString("FollowingID"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return followings;
     }
-    public static void Follow(String userName, String userName1){
+    public static Dialog Follow(String userName, String userName1){
         try {
             statement.executeUpdate("INSERT INTO follow (FollowingID,FollowerID,FollowDate) " +
-                    "VALUES ("
+                    "VALUES ('"
                     +userName+"','"
                     +userName1+"','"
-                    +LocalDate.now()+"','"
+                    +Timestamp.from(Instant.now())+"'"//kal
                     +")");
+            return Dialog.SUCCESS;
         } catch (SQLException e) {
             e.printStackTrace();
+            return Dialog.OPERATION_FAILED;
         }
     }
-    public static void UnFollow(String userName, String userName1){
+    public static Dialog UnFollow(String userName, String userName1){
         try {
-            statement.executeUpdate("DELETE FROM follow WHERE Follower='"+userName+"' AND Following='"+userName1+"'");
+            statement.executeUpdate("DELETE FROM follow WHERE FollowerID='"+userName+"' AND FollowingID='"+userName1+"'");
+            return Dialog.SUCCESS;
         } catch (SQLException e) {
             e.printStackTrace();
+            return Dialog.OPERATION_FAILED;
         }
     }
     public static int getFollowerCount(String userName){
         int count = 0;
         try {
-            ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) FROM View WHERE Follower='"+userName+"'");
+            ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) FROM follow WHERE FollowerID='"+userName+"'");
             resultSet.next();
             count = resultSet.getInt(1);
         } catch (SQLException e) {
@@ -300,7 +325,7 @@ public class DB {
     public static int getFollowingCount(String userName){
         int count = 0;
         try {
-            ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) FROM View WHERE Follower='"+userName+"'");
+            ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) FROM View WHERE FollowerID='"+userName+"'");
             resultSet.next();
             count = resultSet.getInt(1);
         } catch (SQLException e) {
@@ -308,18 +333,20 @@ public class DB {
         }
         return count;
     }
-    public static void addView(String postID, String userName){
-        try {
-            statement.executeUpdate("INSERT INTO like (PostID,ViewDate,ViewUserID) " +
-                    "VALUES ('"
-                    +postID+"+','"
-                    +LocalDate.now()+"','"
-                    +userName
-                    +"')");
-        } catch (SQLException e) {
-            e.printStackTrace();
+    public static Dialog addView(String postID, String userName){
+            try {
+                statement.executeUpdate("INSERT INTO like (PostID,ViewDate,ViewUserID) " +
+                        "VALUES ('"
+                        +postID+"+','"
+                        +Timestamp.from(Instant.now())+"','"//kal
+                        +userName
+                        +"')");
+                return Dialog.SUCCESS;
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return Dialog.FOLLOWED;
+            }
         }
-    }
     public static boolean isViewedBy(String userName, String postID){
         boolean is = false;
         try {
@@ -336,7 +363,7 @@ public class DB {
         }
         return is;
     }
-    public static int getViewsCount(String postID, Statement statement){
+    public static int getViewsCount(String postID){
         int count = 0;
         try {
             ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) FROM View WHERE PostID='"+postID+"'");
@@ -347,33 +374,42 @@ public class DB {
         }
         return count;
     }
-    public static ArrayList<java.time.LocalDate> getViewsDate(Statement statement){
-        ArrayList<java.time.LocalDate> dates = new ArrayList<>();
+    static ArrayList<Timestamp> getViewsDate(){
+        ArrayList<Timestamp> dates = new ArrayList<>();
         try {
             ResultSet resultSet = statement.executeQuery("SELECT ViewDate FROM view");
+            Timestamp ts;//kal
             while (resultSet.next()){
-                dates.add(resultSet.getDate("ViewDate").toLocalDate());
+                ts = new Timestamp(resultSet.getDate("ViewDate").getTime());//kal
+                dates.add(ts);//kal
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return dates;
     }
-    public static void createGroup(String groupID, String ownerID, String groupName, boolean isGroup, Statement statement){
+    public static Dialog createGroup(String groupID, String ownerID, String groupName, boolean isGroup){
+        int a;
+        if (isGroup == true)
+            a=1;
+        else
+            a=0;
         try {
             statement.executeUpdate("INSERT INTO group (GroupID,OwnerID,CreateDate,GroupName,isGroup) " +
                     "VALUES ('"
                     +groupID+"','"
                     +ownerID+"','"
-                    +LocalDate.now()+"','"
+                    +Timestamp.from(Instant.now())+"','"//kal
                     +groupName+"',"
-                    +isGroup
+                    +a
                     +")");
+            return Dialog.SUCCESS;
         } catch (SQLException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
+            return Dialog.OPERATION_FAILED;
         }
     }
-    public static String getGroupName(String groupID, Statement statement){
+    public static String getGroupName(String groupID){
         String groupName = "";
         try {
             ResultSet resultSet = statement.executeQuery("SELECT GroupName FROM group WHERE GroupID='"+groupID+"'");
@@ -384,53 +420,54 @@ public class DB {
         }
         return groupName;
     }
-    public static void changeGroupName(String groupID, String newGroupName, Statement statement){
+    public static Dialog changeGroupName(String groupID, String newGroupName){
         try {
             statement.executeUpdate("UPDATE group SET GroupName='"+newGroupName+"' WHERE GroupID='"+groupID+"'");
+            return Dialog.SUCCESS;
         } catch (SQLException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
+            return Dialog.OPERATION_FAILED;
         }
     }
-    public static boolean isGroup(String groupID, Statement statement){
+    public static boolean isGroup(String groupID){//kal
         boolean is = false;
         try {
-            ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) FROM group WHERE GroupID='"+groupID+"'");
+            ResultSet resultSet = statement.executeQuery("SELECT isGroup FROM group WHERE GroupID='"+groupID+"'");
             resultSet.next();
-            if(resultSet.getInt(1)>0){
-                is = true;
-            }
-            else{
-                is = false;
-            }
+            is = resultSet.getBoolean("isGroup");
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return is;
     }
-    public static void addMember(String groupID, String memberID, boolean isAdmin, Statement statement){
+    public static Dialog addMember(String groupID, String memberID, boolean isAdmin){
         try {
             statement.executeUpdate("INSERT INTO group (GroupID,MemberID,JoinDate,isAdmin) " +
                     "VALUES ('"
                     +groupID+"','"
                     +memberID+"','"
-                    +LocalDate.now()+"','"
+                    +Timestamp.from(Instant.now())+"','"//kal
                     +isAdmin
                     +"')");
+            return Dialog.SUCCESS;
         } catch (SQLException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
+            return Dialog.OPERATION_FAILED;
         }
     }
-    public static void deleteMember(String groupID, String memberID, Statement statement){
+    public static Dialog deleteMember(String groupID, String memberID){
         try {
             statement.executeUpdate("DELETE FROM member WHERE GroupID='"+groupID+"' AND MemberID='"+memberID+"'");
+            return Dialog.SUCCESS;
         } catch (SQLException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
+            return Dialog.OPERATION_FAILED;
         }
     }
-    public static ArrayList<String> getGroups(String userName, Statement statement){
+    public static ArrayList<String> getGroups(String userName){
         ArrayList<String> groups = new ArrayList<>();
         try {
-            ResultSet resultSet = statement.executeQuery("SELECT GroupID FROM group WHERE MemberID="+userName);
+            ResultSet resultSet = statement.executeQuery("SELECT GroupID FROM group WHERE MemberID='"+userName+"'");//kal
             while (resultSet.next()){
                 groups.add(resultSet.getString("GroupID"));
             }
@@ -442,7 +479,7 @@ public class DB {
     public static ArrayList<String> getMembers(String groupID, Statement statement){
         ArrayList<String> members = new ArrayList<>();
         try {
-            ResultSet resultSet = statement.executeQuery("SELECT MemberID FROM group WHERE GroupID="+groupID);
+            ResultSet resultSet = statement.executeQuery("SELECT MemberID FROM group WHERE GroupID='"+groupID+"'");//kal
             while (resultSet.next()){
                 members.add(resultSet.getString("MemberID"));
             }
@@ -451,92 +488,89 @@ public class DB {
         }
         return members;
     }
-    public static void addMessage(String groupID, String senderID, String photoID, String text, Statement statement){
+    public static Dialog addMessage(String groupID, String senderID, String photoID, String text){
         try {
             statement.executeUpdate("INSERT INTO message (GroupID,SenderID,SentDate,PhotoMessage,Text) " +
                     "VALUES ('"
                     +groupID+"','"
                     +senderID+"','"
-                    +LocalDate.now()+"','"
-                    +((photoID.isEmpty())? "null,":"'"+photoID+ "'")
-                    +",'"
+                    +Timestamp.from(Instant.now())+"','"//kal
+                    +photoID +"','"
+//                    +((photoID.isEmpty())? "null,":"'"+photoID+ "'")
                     +text
-                    +"')");
+                    +"')");// TODO: 7/30/2022 may be wrong
+            return Dialog.SUCCESS;
         } catch (SQLException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
+            return Dialog.OPERATION_FAILED;
         }
     }
-    public static void editMessage(int messageID,String text, String photoID){
+    public static Dialog editMessage(int messageID,String text, String photoID){
         try {
             statement.executeUpdate("UPDATE message SET Text='"+text+"' PhotoMessage='"+photoID+"'+ WHERE MessageID='"+messageID+"'");
+            return Dialog.SUCCESS;
         } catch (SQLException e) {
-            e.printStackTrace();
+            return Dialog.OPERATION_FAILED;
+//            e.printStackTrace();
         }
     }
-    public static void deleteMessage(int messageID){
+    public static Dialog deleteMessage(int messageID){
         try {
             statement.executeUpdate("DELETE FROM message WHERE MessageID='"+messageID+"'");
+            return Dialog.SUCCESS;
         } catch (SQLException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
+            return Dialog.OPERATION_FAILED;
         }
     }
-    public static void editPassword(String userName,String newPassword){
+    public static Dialog editPassword(String userName,String newPassword){
         try {
             statement.executeUpdate("UPDATE user SET Password='"+newPassword+"' WHERE UserName='"+userName+"'");
+            return Dialog.SUCCESS;
         } catch (SQLException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
+            return Dialog.OPERATION_FAILED;
         }
     }
-    public static void editFirstName(String userName,String firstName){
+    public static Dialog editFirstName(String userName,String firstName){
         try {
             statement.executeUpdate("UPDATE user SET FirstName='"+firstName+"' WHERE UserName='"+userName+"'");
+            return Dialog.SUCCESS;
         } catch (SQLException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
+            return Dialog.OPERATION_FAILED;
         }
     }
-    public static void editLastName(String userName,String lastName){
+    public static Dialog editLastName(String userName,String lastName){
         try {
             statement.executeUpdate("UPDATE user SET LastName='"+lastName+"' WHERE UserName='"+userName+"'");
+            return Dialog.SUCCESS;
         } catch (SQLException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
+            return Dialog.OPERATION_FAILED;
         }
     }
-    public static void editProfilePicture(String userName,String profilePicture){
+    public static Dialog editProfilePicture(String userName,String profilePicture){
         try {
             statement.executeUpdate("UPDATE user SET ProfilePicture='"+profilePicture+"' WHERE UserName='"+userName+"'");
+            return Dialog.SUCCESS;
         } catch (SQLException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
+            return Dialog.OPERATION_FAILED;
         }
+    }
+    public static boolean isFollowing(String followerUserName,String followedUserName ){
+        for (String follower : DB.getFollowers(followedUserName)) {
+            if (DB.getUser(follower).getUserName().equals(followerUserName))
+                return true;
+        }
+        return false;
     }
     public static Dialog start(){
         try {
             java.sql.Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/jdbc","root","");
             statement = connection.createStatement();
             return Dialog.DATABASE_CONNECTED;
-//            statement.executeUpdate("DELETE FROM account WHERE Followers='FHJHF' AND Followings='FHHBT'");
-//            System.out.println("Deleted successfully");
-
-
-
-
-
-//            statement.executeUpdate("UPDATE account SET Password='lfhgkf' WHERE Followers='jhgf' AND Followings='hdfhc'");
-//            System.out.println("Updated successfully");
-
-
-
-//            statement.executeUpdate("INSERT INTO account (ID,Password,Followers,Followings) VALUES ('jsjghbff','HAKFSF','FHJHF','FHHBT')" );
-//            System.out.println("Inserted successfully");
-
-//            ResultSet resultSet = statement.executeQuery("SELECT*FROM account");
-//            while (resultSet.next()){
-//                System.out.println(resultSet.getString("ID"));
-//                System.out.println(resultSet.getString("Password"));
-//                //System.out.println(resultSet.getString("JoinDate"));
-//                //System.out.println(resultSet.getString("BirthDate"));
-//                System.out.println(resultSet.getString("Followers"));
-//                System.out.println(resultSet.getString("Followings"));
-//            }
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println(Dialog.DATABASE_NOT_CONNECTED);

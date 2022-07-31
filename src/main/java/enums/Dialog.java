@@ -18,7 +18,12 @@ public enum Dialog {
     MESSAGE_LIKE_REMOVED("You removed your like"),
     COMMENT_ADDED_SUCCESSFULLY("Comment added successfully"),
     DATABASE_NOT_CONNECTED("dataBase connection failed"),
-    DATABASE_CONNECTED("connected to dataBase");
+    DATABASE_CONNECTED("connected to dataBase"),
+    FOLLOWED("Followed"),
+    UNFOLLOWED("unfollowed"),
+    SELF_FOLLOW("Can not follow yourself"),
+    ALREADY_FOLLOWING("already following this user");
+
     private String dialog;
 
     Dialog(String dialog){

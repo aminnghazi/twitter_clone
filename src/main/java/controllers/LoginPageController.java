@@ -6,7 +6,16 @@ import models.User;
 import views.View;
 
 public class LoginPageController extends Controller{
-
+    public Dialog verifyLogin(String userName, String password) {
+        User user = DB.getUser(userName);
+        if (user == null)
+            return Dialog.USER_DOES_NOT_EXIST;
+        if (user.getPassword().equals(password)){
+            View.setLoggedInUser(user);
+            return Dialog.SUCCESS;
+        }
+        return Dialog.WRONG_CREDENTIALS;
+    }
 
     public Dialog verifyRegister(String userName, String password,String repeatedPassword,String type,
                                  String securityQuestion, String securityAnswer){
@@ -22,7 +31,7 @@ public class LoginPageController extends Controller{
             return Dialog.SUCCESS;//normal user created
         }
         if (type.toLowerCase().equals("business")){
-            User user = new User(userName,password,securityQuestion,securityAnswer,true,null);
+            User user = new User(userName,password,securityQuestion,securityAnswer,true,"-1");
             DB.addUser(user);
             return Dialog.SUCCESS;//business user created
         }

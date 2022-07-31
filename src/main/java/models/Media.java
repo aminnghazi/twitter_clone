@@ -1,15 +1,18 @@
 package models;
 
+import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 public abstract class Media {
 
 
 
-    private Date dateCreated;
+    private Timestamp dateCreated;
     private String senderUsername;
     private String image;
     private String text;
@@ -20,14 +23,11 @@ public abstract class Media {
         this.senderUsername = senderUsername;
         this.image = image;
         this.text = text;
-        this.ID = senderUsername+ Long.toString(Instant.now().toEpochMilli());
         if (parentID != null)
             this.parentID = parentID;
         else
             this.parentID = "-1";
-         LocalDate localDate= LocalDate.now();
-        // TODO: 7/29/2022 change to right date
-        dateCreated = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+
 
 //        LocalDateTime currentTime = LocalDateTime.now();
 //        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
@@ -35,11 +35,11 @@ public abstract class Media {
     }
 
 
-    public Date getDateCreated() {
+    public Timestamp getDateCreated() {
         return dateCreated;
     }
 
-    public void setDateCreated(Date dateCreated) {
+    public void setDateCreated(Timestamp dateCreated) {
         this.dateCreated = dateCreated;
     }
 
@@ -81,5 +81,17 @@ public abstract class Media {
 
     public void setParentID(String parentID) {
         this.parentID = parentID;
+    }
+
+    @Override
+    public String toString() {
+        return "Media{" +
+                "dateCreated=" + dateCreated +
+                ", senderUsername='" + senderUsername + '\'' +
+                ", image='" + image + '\'' +
+                ", text='" + text + '\'' +
+                ", ID='" + ID + '\'' +
+                ", parentID='" + parentID + '\'' +
+                '}';
     }
 }
