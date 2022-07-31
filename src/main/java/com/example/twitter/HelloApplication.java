@@ -10,7 +10,6 @@ import javafx.stage.Stage;
 public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws Exception {
-        System.out.println(DB.start());
         View.setStage(stage);
         stage.setTitle("Hello!");
         stage.setTitle("Twitter");
@@ -22,6 +21,7 @@ public class HelloApplication extends Application {
     }
 
     public static void main(String[] args) {
-        launch();
+        System.out.println(DB.start());
+        launch(args);
     }
 }
