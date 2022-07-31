@@ -574,7 +574,6 @@ public class DB {
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println(Dialog.DATABASE_NOT_CONNECTED);
-            //System.out.println("nohr");
         }
         return Dialog.OPERATION_FAILED;
     }

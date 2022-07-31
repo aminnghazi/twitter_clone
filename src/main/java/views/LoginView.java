@@ -13,6 +13,7 @@ public class LoginView {//controller of login-view.fxml
     public TextField userName;
 
     public void loginClicked(MouseEvent mouseEvent) {
+//        View.showDialog("salam");
         String userName = this.userName.getText();
         String password = this.password.getText();
         Dialog dialog = controller.verifyLogin(userName, password);
