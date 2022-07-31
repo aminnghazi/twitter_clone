@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws Exception {
+        View.setStage(stage);
         stage.setTitle("Hello!");
         stage.setTitle("Twitter");
         stage.setFullScreen(true);

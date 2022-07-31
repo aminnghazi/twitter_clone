@@ -8,6 +8,15 @@ import models.User;
 public abstract class View extends Application {
     private static User loggedInUser = null;
 
+    public static Stage getStage() {
+        return stage;
+    }
+
+    public static void setStage(Stage stage) {
+        View.stage = stage;
+    }
+
+    protected static Stage stage;
     public static void setLoggedInUser(User loggedInUser) {
         View.loggedInUser = loggedInUser;
     }
