@@ -1,18 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.net.*?>
-<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
-   <center>
-      <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
-   </center>
+<BorderPane fx:id="loginPage" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.LoginPage">
+<center>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <HBox alignment="BASELINE_LEFT" HBox.hgrow="ALWAYS" />
+            <VBox fx:id="vbox" alignment="TOP_CENTER" prefHeight="400.0" prefWidth="237.0" HBox.hgrow="ALWAYS">
+                  <children>
+                     <VBox alignment="TOP_CENTER" VBox.vgrow="ALWAYS" />
+                  <GridPane fx:id="content" styleClass="rounded">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" percentHeight="90.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                  </GridPane>
 
-   <top>
-      <Label alignment="CENTER" text="Label" BorderPane.alignment="CENTER" styleClass="h1"/>
-   </top>
-    <stylesheets>
-        <URL value="@../CSS/login.css" />
-    </stylesheets>
+                     <VBox alignment="BOTTOM_CENTER" VBox.vgrow="ALWAYS" />
+                  </children>
+            </VBox>
+            <HBox alignment="BASELINE_RIGHT" HBox.hgrow="ALWAYS" />
+         </children>
+      </HBox>
+</center>
+   <stylesheets>
+      <URL value="@../CSS/login.css" />
+   </stylesheets>
 </BorderPane>

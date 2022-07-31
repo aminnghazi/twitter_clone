@@ -5,23 +5,9 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import models.User;
 
-import java.util.Scanner;
-
 public abstract class View extends Application {
-    public static Stage stage;
     private static User loggedInUser = null;
 
-    public static void setStage(Stage stage) {
-        View.stage = stage;
-    }
-
-    public static Stage getStage() {
-        return stage;
-    }
-
-    public static void setScene(Scene scene){
-        stage.setScene(scene);
-    }
     public static void setLoggedInUser(User loggedInUser) {
         View.loggedInUser = loggedInUser;
     }

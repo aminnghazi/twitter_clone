@@ -2,11 +2,7 @@ package models;
 
 import views.View;
 
-import java.time.DateTimeException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class Post extends Media {
     private int viewsCount;

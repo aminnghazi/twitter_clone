@@ -3,13 +3,38 @@
             linear-gradient(#4568DC, #B06AB3),
             repeating-image-pattern("/pics/stars.png"),
             radial-gradient(center 50% 50%, radius 50%, #FFFFFF33, #00000033);
+
+    -fx-focus-color: transparent;
+
 }
-.h1 {
-    fx-color: #111;
-    fx-font-family: 'Helvetica Neue', sans-serif;
-    fx-font-size: 275px;
-    fx-font-weight: bold;
-    fx-letter-spacing: -1px;
-    fx-line-height: 1;
-    fx-text-align: center;
+.title {
+    -fx-color: #a12020;
+    -fx-font-family:  sans-serif;
+    -fx-font-size: 200px;
+    -fx-font-weight: bold;
+    -fx-letter-spacing: -1px;
+    -fx-line-height: 1;
+    -fx-text-align: center;
+
+}
+.title:hover{
+    --fxbackground-color: #ffffff;
+}
+
+.button {
+    -fx-background-radius: 20;
+    -fx-focus-color: transparent;
+}
+.button:hover{
+    /*-fx-border-style: ;*/
+    -fx-color: #a12020;
+}
+.button:selected{
+    -fxbackground-color: #d81d1d;
+}
+
+
+.rounded {
+    -fx-background-radius: 15;
+    -fx-background-color: rgba(0, 0, 37, 0.67);
 }

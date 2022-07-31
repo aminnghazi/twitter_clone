@@ -1,24 +1,21 @@
 package com.example.twitter;
 
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
+import javafx.scene.image.Image;
 import views.LoginPage;
 import views.View;
-
-import java.io.IOException;
+import javafx.application.Application;
+import javafx.stage.Stage;
 
 public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         stage.setTitle("Hello!");
-        View.setStage(stage);
-        LoginPage loginPage = new LoginPage();
-        loginPage.start(View.getStage());
         stage.setTitle("Twitter");
         stage.setFullScreen(true);
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/pics/icon.png")));
         stage.show();
+        LoginPage loginPage = new LoginPage();
+        loginPage.start(stage);
     }
 
     public static void main(String[] args) {
