@@ -35,6 +35,8 @@ javafx {
 
 dependencies {
     implementation('org.kordamp.bootstrapfx:bootstrapfx-core:0.4.0')
+    implementation 'mysql:mysql-connector-java:8.0.28'
+    implementation 'io.syndesis.connector:connector-utils:1.3.0-20180304'
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
