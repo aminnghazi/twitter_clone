@@ -37,6 +37,7 @@ dependencies {
     implementation('org.kordamp.bootstrapfx:bootstrapfx-core:0.4.0')
     implementation 'mysql:mysql-connector-java:8.0.29'
     implementation 'io.syndesis.connector:connector-utils:1.3.0-20180304'
+    implementation 'com.twelvemonkeys.imageio:imageio-core:3.8.2'
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")

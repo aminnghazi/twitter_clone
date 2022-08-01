@@ -4,12 +4,16 @@ import enums.Dialog;
 import enums.Messages;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -23,13 +27,13 @@ public class SignUp implements Initializable {
     public PasswordField repeatedPassword;
     public ComboBox AccountType;
     public Label error;
+    public TextField answer;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
             comboBox.getItems().add(Messages.TEACHER);
             comboBox.getItems().add(Messages.PET);
             comboBox.getItems().add(Messages.FRIEND);
-            System.out.println(comboBox.getValue());
             AccountType.getItems().add("Normal account");
             AccountType.getItems().add("Business account");
 
@@ -51,8 +55,9 @@ public class SignUp implements Initializable {
     public void signUpClicked(MouseEvent mouseEvent) {
         String firstName = this.firstName.getText();
         String lastName = this.lastName.getText();
-        String password = this.password.getText();
+        String answer = this.answer.getText();
         String repeatedPassword = this.repeatedPassword.getText();
+        String password = this.password.getText();
         String userName = this.userName.getText();
         String picture = "-1";
         String accountType;
@@ -74,17 +79,48 @@ public class SignUp implements Initializable {
             }
         }
 
-//        Dialog dialog = LoginView.controller.verifyRegister
-//                (userName,firstName,lastName,password,repeatedPassword,);
     if (comboBox.getValue() == null){
-        System.out.println("choose your security question");
+        error.setText("Choose your security question type");
         return;
     }else {
         switch (comboBox.getValue().toString()){
-            case Messages
-
+            case "what is the name of your first grade teacher?":
+                securityQestion="teacher";
+                break;
+            case "what is name of your childhood pet?":
+                securityQestion="pet";
+                break;
+            case "who is your best friend":
+                securityQestion="friend";
+                break;
+            default:
+                error.setText("wrong security question");
+                return;
         }
     }
+        Dialog dialog = LoginView.controller.verifyRegister
+                (userName,firstName,lastName,password,repeatedPassword,accountType,
+                        securityQestion,answer);
+        if (dialog == Dialog.SUCCESS) {
+            View.showDialog("Account created successfully");
+            return;
+        }
+        else
+            error.setText(dialog.toString());
     }
 
+    public void profileButtonClicked(MouseEvent mouseEvent) {
+        Button button = (Button) mouseEvent.getSource();
+        Stage stage = (Stage) button.getScene().getWindow();
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Image files", "*.png")
+                ,new FileChooser.ExtensionFilter("Image files", "*.jpg"));
+        File selectedFile = fileChooser.showOpenDialog(stage);
+        try {
+            Image image = ImageIO.read(selectedFile);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
 }

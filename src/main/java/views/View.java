@@ -7,6 +7,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import models.User;
 
 import java.io.IOException;
@@ -39,7 +40,7 @@ public abstract class View extends Application {
             javafx.scene.control.Dialog<ButtonType> dialog = new javafx.scene.control.Dialog<>();
             controller.setDialog(text);
             dialog.setDialogPane(dialogPane);
-
+            dialog.initStyle(StageStyle.TRANSPARENT);
             dialog.showAndWait();
 //            Optional<ButtonType> clickedButton = dialog.showAndWait();
 
