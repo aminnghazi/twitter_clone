@@ -22,10 +22,13 @@ public class LoginPage extends View{
         BorderPane borderPane = FXMLLoader.load(this.getClass().getResource("/fxml/login-page.fxml"));
         Scene scene = new Scene(borderPane);
         primaryStage.setScene(scene);
+        primaryStage.setMaximized(true);
     }
 
     public void initialize() throws IOException {
-        GridPane gridPane = FXMLLoader.load(this.getClass().getResource("/fxml/loginView.fxml"));
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/fxml/loginView.fxml"));
+        GridPane gridPane = loader.load();//loading login view
         content.add(gridPane,1,1);
+
     }
 }

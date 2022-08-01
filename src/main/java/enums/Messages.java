@@ -5,7 +5,10 @@ public enum Messages {
     NO_COMMENTS_TO_SHOW("There are no comments here yet!"),
     WELCOME(""),
     FOLLOW("Unfollow"),
-    UNFOLLOW("follow");
+    UNFOLLOW("follow"),
+    TEACHER("what is the name of your first grade teacher?"),
+    PET("what is name of your childhood pet?"),
+    FRIEND("who is your best friend");
 
 
     private String message;

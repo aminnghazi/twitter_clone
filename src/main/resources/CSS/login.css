@@ -21,6 +21,7 @@
 .button {
     -fx-background-color: rgba(41, 18, 81, 0.76);
     -fx-background-radius: 8;
+    -fx-text-fill: #d1d1d1;
 }
 .button:hover{
     /*-fx-border-style: ;*/

@@ -11,9 +11,7 @@ public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         View.setStage(stage);
-        stage.setTitle("Hello!");
         stage.setTitle("Twitter");
-        stage.setFullScreen(true);
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/pics/icon.png")));
         stage.show();
         LoginPage loginPage = new LoginPage();

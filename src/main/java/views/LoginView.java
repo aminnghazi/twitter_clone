@@ -1,18 +1,34 @@
 package views;
 
-import controllers.LoginViewController;
+import controllers.LoginPageController;
 import enums.Dialog;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
+import javafx.scene.layout.GridPane;
+import javafx.stage.StageStyle;
+import models.DB;
+
+import java.io.IOException;
 
 public class LoginView {//controller of login-view.fxml
-    LoginViewController controller = new LoginViewController();
+    public static LoginPageController controller = new LoginPageController();
     public PasswordField password;
     public TextField userName;
+    boolean testMode = true;
 
     public void loginClicked(MouseEvent mouseEvent) {
+        if (testMode) {
+            View.setLoggedInUser(DB.getUser("ali"));
+            HomePage homePage = new HomePage();
+            try {
+                homePage.start(View.getStage());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return;
+        }
 //        View.showDialog("salam");
         String userName = this.userName.getText();
         String password = this.password.getText();
@@ -30,4 +46,15 @@ public class LoginView {//controller of login-view.fxml
         }
     }
 
+    public void signUp(MouseEvent mouseEvent) {
+        try {
+            GridPane signUpView = FXMLLoader.load(this.getClass().getResource("/fxml/sign-up-view.fxml"));
+            javafx.scene.control.Dialog dialog = new javafx.scene.control.Dialog();
+            dialog.getDialogPane().setContent(signUpView);
+            dialog.initStyle(StageStyle.TRANSPARENT);
+            dialog.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

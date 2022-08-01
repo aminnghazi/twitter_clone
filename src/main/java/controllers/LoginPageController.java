@@ -17,7 +17,7 @@ public class LoginPageController extends Controller{
         return Dialog.WRONG_CREDENTIALS;
     }
 
-    public Dialog verifyRegister(String userName, String password,String repeatedPassword,String type,
+    public Dialog verifyRegister(String userName,String name,String lastName, String password,String repeatedPassword,String type,
                                  String securityQuestion, String securityAnswer){
         if (doesAccountExist(userName))
             return Dialog.USER_EXIST;//duplicate account
@@ -35,7 +35,11 @@ public class LoginPageController extends Controller{
             DB.addUser(user);
             return Dialog.SUCCESS;//business user created
         }
-        else return Dialog.USER_CREATION_FAILED;
+        if (name==null)
+            return Dialog.EMPTY_NAME;
+        if (lastName==null)
+            return Dialog.EMPTY_LAST_NAME;
+        return Dialog.USER_CREATION_FAILED;
 
     }
     public boolean doesAccountExist(String userName){

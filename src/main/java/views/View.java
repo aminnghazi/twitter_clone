@@ -33,11 +33,13 @@ public abstract class View extends Application {
     }
     protected static void showDialog(String text){
         try {
-            DialogPane dialogPane = FXMLLoader.load(View.class.getResource("/fxml/dialog-box.fxml"));
+            FXMLLoader loader = new FXMLLoader(View.class.getResource("/fxml/dialog-box.fxml"));
+            DialogPane dialogPane = loader.load();
+            Dialogs controller = loader.getController();
             javafx.scene.control.Dialog<ButtonType> dialog = new javafx.scene.control.Dialog<>();
-            dialog.setDialogPane(dialogPane);
-            Dialogs controller = new Dialogs();
             controller.setDialog(text);
+            dialog.setDialogPane(dialogPane);
+
             dialog.showAndWait();
 //            Optional<ButtonType> clickedButton = dialog.showAndWait();
 

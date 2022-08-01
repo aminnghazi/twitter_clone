@@ -22,7 +22,9 @@ public enum Dialog {
     FOLLOWED("Followed"),
     UNFOLLOWED("unfollowed"),
     SELF_FOLLOW("Can not follow yourself"),
-    ALREADY_FOLLOWING("already following this user");
+    ALREADY_FOLLOWING("already following this user"),
+    EMPTY_NAME("First name field can not be empty"),
+    EMPTY_LAST_NAME("Last name field can not be empty");
 
     private String dialog;
 
