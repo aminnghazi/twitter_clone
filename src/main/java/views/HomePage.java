@@ -31,14 +31,11 @@ public class HomePage extends View{
         primaryStage.setMaximized(true);
     }
     public void initialize(){
-
+        loadPostsView();
     }
 
     public void homeClicked(MouseEvent mouseEvent) {
-        // TODO: 8/2/2022 change from parent
-//        Parent
-        middleContainer.getChildren().clear();
-        middleContainer.getChildren().add();
+        loadPostsView();
     }
 
     public void tweetButtonClicked(MouseEvent mouseEvent) {
@@ -53,6 +50,16 @@ public class HomePage extends View{
 //            middleContainer.getChildren().add(parent);
         } catch (IOException e) {
             System.out.println("couldnt load tweet page");
+            e.printStackTrace();
+        }
+    }
+    private void loadPostsView(){
+        // TODO: 8/2/2022 change from parent
+        try {
+            Parent posts = FXMLLoader.load(this.getClass().getResource("/fxml/posts-view.fxml"));
+            middleContainer.getChildren().clear();
+            middleContainer.getChildren().add(posts);
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

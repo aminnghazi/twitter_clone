@@ -97,10 +97,7 @@
     -fx-padding: 0 0 0 3;
 }
 
-.list-cell:hover {
-    -fx-background-color: #3E3E40;
-    -fx-cursor: HAND;
-}
+
 
 .list-cell:pressed {
     -fx-background-color: #3E3E40;
@@ -123,6 +120,7 @@
 
 .list-cell {
     -fx-background-color: #f8f8f8;
+    -fx-background-radius: 15;
     /* -fx-text-fill: black; */
     -fx-border-width: 0;
     -fx-pref-height: 35;
