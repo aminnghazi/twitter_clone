@@ -4,22 +4,32 @@ import enums.Dialog;
 import enums.Messages;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
+import models.Media;
+import models.Utility;
+
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
+import java.util.Base64;
 import java.util.ResourceBundle;
 
 public class SignUp implements Initializable {
-    public ComboBox comboBox;
+    public ComboBox<String> comboBox;
     public GridPane gridPane;
+    String profile = "-1";
     public PasswordField password;
     public TextField userName;
     public TextField lastName;
@@ -28,12 +38,11 @@ public class SignUp implements Initializable {
     public ComboBox AccountType;
     public Label error;
     public TextField answer;
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-            comboBox.getItems().add(Messages.TEACHER);
-            comboBox.getItems().add(Messages.PET);
-            comboBox.getItems().add(Messages.FRIEND);
+            comboBox.getItems().add(Messages.TEACHER.toString());
+            comboBox.getItems().add(Messages.PET.toString());
+            comboBox.getItems().add(Messages.FRIEND.toString());
             AccountType.getItems().add("Normal account");
             AccountType.getItems().add("Business account");
 
@@ -84,6 +93,7 @@ public class SignUp implements Initializable {
         return;
     }else {
         switch (comboBox.getValue().toString()){
+
             case "what is the name of your first grade teacher?":
                 securityQestion="teacher";
                 break;
@@ -116,11 +126,8 @@ public class SignUp implements Initializable {
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("Image files", "*.png")
                 ,new FileChooser.ExtensionFilter("Image files", "*.jpg"));
-        File selectedFile = fileChooser.showOpenDialog(stage);
-        try {
-            Image image = ImageIO.read(selectedFile);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
+        File file = fileChooser.showOpenDialog(stage);
+        profile = Utility.encodeImageFile(file);
+
     }
 }

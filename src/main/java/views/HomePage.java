@@ -8,7 +8,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Dialog;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -32,10 +31,14 @@ public class HomePage extends View{
         primaryStage.setMaximized(true);
     }
     public void initialize(){
-        homePage.getChildren();
+
     }
 
     public void homeClicked(MouseEvent mouseEvent) {
+        // TODO: 8/2/2022 change from parent
+//        Parent
+        middleContainer.getChildren().clear();
+        middleContainer.getChildren().add();
     }
 
     public void tweetButtonClicked(MouseEvent mouseEvent) {

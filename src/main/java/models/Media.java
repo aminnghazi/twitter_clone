@@ -1,11 +1,18 @@
 package models;
 
+import enums.Messages;
+import javafx.scene.image.Image;
+
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.*;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Base64;
 import java.util.Date;
 
 public abstract class Media {
@@ -82,6 +89,7 @@ public abstract class Media {
     public void setParentID(String parentID) {
         this.parentID = parentID;
     }
+
 
     @Override
     public String toString() {
