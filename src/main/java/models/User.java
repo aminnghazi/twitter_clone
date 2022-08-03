@@ -28,9 +28,12 @@ public class User {
         this.securityAnswer =securityQuestionAnswer;
         this.isBusiness = isBusiness;
         this.birthDate = LocalDate.now();// TODO: 7/30/2022 change with real one
-        this.firstName = firstName;// TODO: 7/30/2022
-        this.lastName = lastName;// TODO: 7/30/2022
-        this.profilePicture = profilePicture;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        if (profilePicture.equals("null"))
+            this.profilePicture ="-1";
+        else
+            this.profilePicture = profilePicture;
 //        LocalDateTime currentTime = LocalDateTime.now();
 //        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd : HH:mm:ss");
 //        joinDate = currentTime.format(formatter);

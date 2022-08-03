@@ -87,26 +87,18 @@
 
 
 /* ListCell */
-/* .list-cell {
-    -fx-background-radius: 0;
-    -fx-border-width: 0;
-    -fx-text-fill: #AFB1B3;
-    -fx-background-color: #1A1A1A;
-    -fx-min-height: 18;
-    -fx-pref-height: 18;
-    -fx-padding: 0 0 0 3;
-}
+/*.list-cell {*/
+/*    -fx-background-radius: 0;*/
+/*    -fx-border-width: 0;*/
+/*    -fx-text-fill: #AFB1B3;*/
+/*    -fx-background-color: #1A1A1A;*/
+/*    -fx-min-height: 18;*/
+/*    -fx-pref-height: 18;*/
+/*    -fx-padding: 0 0 0 3;*/
+/*}*/
 
 
 
-.list-cell:pressed {
-    -fx-background-color: #3E3E40;
-}
-
-.list-cell:selected {
-    -fx-background-color: #3E3E40;
-}
-*/
 
 /*!* ListView *!*/
 /*.list-view {*/
@@ -134,13 +126,26 @@
 
 /*    !* -fx-background-color: red; *!*/
 /*}*/
+.list-cell {
+    -fx-start-margin: 1 1 1 1;
+        -fx-cursor: POINTER;
+        -fx-background-insets: 0 ;
+
+}
+
+.list-cell:pressed {
+    -fx-background-color: #79797d;
+}
+
+/*.list-cell:selected {*/
+/*    -fx-background-color: #858484;*/
+/*}*/
 
 .list-cell:hover {
     -fx-background-color: rgb(255, 255, 255);
+    -fx-cursor: hand;
 }
-.list-cell:selected {
-     -fx-background-color: rgb(255, 255, 255);
-}
+
 .list-view {
     -fx-background-color: transparent;
     -fx-border-width: 0;
@@ -153,9 +158,7 @@
 /*    -fx-border-style:solid none none solid;*/
 /*}*/
 
-.list-cell:pressed {
-    -fx-background-color: rgb(255, 255, 255);
-}
+
 
 /*.list-cell:empty {*/
 /*    -fx-background-color: transparent !important;*/
@@ -1252,7 +1255,7 @@
     /*-fx-background-color: ;*/
 }
 .btn-cstm:hover{
-    -fx-background-color: #a8a3a3;
+    -fx-background-color: #9e9e9e;
 }
 .btn-cstm:pressed{
     -fx-background-color: #848282;
@@ -1278,6 +1281,8 @@
 .text-button {
     -fx-background-radius: 80;
     -fx-background-color: #1f8ee3;
+    -fx-cursor: hand;
+
 }
 .text-button:hover{
     -fx-background-color: #3ea6f2;
@@ -1302,6 +1307,7 @@
 .exit-btn:hover {
      -fx-background-radius: 100;
     -fx-background-color: #5b5b5b;
+
 }
 .post{
     -fx-border-width: 0;
@@ -1318,4 +1324,11 @@
 .post:focused{
     -fx-background-color: rgba(156, 37, 37, 0.88);
 
+}
+
+.round-corner{
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+    -fx-background-color: firebrick;
+    -fx-padding: 10px;
+    -fx-background-radius: 60px;
 }

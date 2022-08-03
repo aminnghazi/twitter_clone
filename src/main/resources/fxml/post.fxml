@@ -4,9 +4,10 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<GridPane fx:id="gridPane" prefHeight="600.0" prefWidth="800.0" styleClass="post" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane fx:id="gridPane" prefHeight="600.0" prefWidth="600.0" styleClass="post" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="10.0" prefWidth="100.0" />
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
@@ -32,6 +33,7 @@
           <RowConstraints minHeight="10.0" percentHeight="5.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" percentHeight="5.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" percentHeight="5.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
             <HBox>
@@ -51,19 +53,44 @@
                   </Label>
                </children>
             </HBox>
-            <Pane fx:id="pane" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+            <Pane fx:id="pane" prefHeight="489.0" prefWidth="540.0" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                <children>
                   <VBox fx:id="vbox">
                      <children>
                         <Label fx:id="postText" text="Label" wrapText="true">
                            <font>
-                              <Font name="Segoe UI" size="18.0" />
+                              <Font name="Microsoft Sans Serif" size="20.0" />
                            </font>
                         </Label>
                         <HBox alignment="CENTER" VBox.vgrow="SOMETIMES">
                            <children>
-                                    <ImageView fx:id="postPic" pickOnBounds="true" preserveRatio="true" />
+                              <Rectangle fx:id="imageRec" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="200.0" stroke="BLACK" strokeType="INSIDE" />
                            </children>
+                           <VBox.margin>
+                              <Insets top="20.0" />
+                           </VBox.margin></HBox>
+                        <HBox alignment="BASELINE_LEFT" prefHeight="86.0" prefWidth="540.0">
+                           <children>
+                              <ImageView fx:id="like" fitHeight="47.0" fitWidth="52.0" opacity="0.8" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../pics/notLiked.png" />
+                                 </image>
+                                 <HBox.margin>
+                                    <Insets left="10.0" right="10.0" />
+                                 </HBox.margin>
+                              </ImageView>
+                              <ImageView fx:id="comment" fitHeight="49.0" fitWidth="47.0" opacity="0.8" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../pics/comment.png" />
+                                 </image>
+                                 <HBox.margin>
+                                    <Insets left="10.0" right="10.0" />
+                                 </HBox.margin>
+                              </ImageView>
+                           </children>
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
                         </HBox>
                      </children>
                   </VBox>

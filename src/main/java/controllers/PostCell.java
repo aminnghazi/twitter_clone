@@ -1,8 +1,9 @@
-package views;
+package controllers;
 
 
 import javafx.scene.control.ListCell;
 import models.Post;
+import views.PostCellData;
 
 public class PostCell extends ListCell<Post> {
     private static int  num=0;

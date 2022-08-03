@@ -21,12 +21,12 @@ public abstract class Media {
 
     private Timestamp dateCreated;
     private String senderUsername;
-    private String image;
+    private Image image;
     private String text;
     private String ID;
     private String parentID;
 
-    protected Media(String senderUsername, String image, String text,String parentID) {
+    protected Media(String senderUsername, Image image, String text,String parentID) {
         this.senderUsername = senderUsername;
         this.image = image;
         this.text = text;
@@ -54,9 +54,6 @@ public abstract class Media {
         return senderUsername;
     }
 
-    public String getImage() {
-        return image;
-    }
 
     public String getText() {
         return text;
@@ -74,7 +71,11 @@ public abstract class Media {
         this.senderUsername = senderUsername;
     }
 
-    public void setImage(String image) {
+    public Image getImage() {
+        return image;
+    }
+
+    public void setImage(Image image) {
         this.image = image;
     }
 

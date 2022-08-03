@@ -1,6 +1,6 @@
 //package views;
 //
-//import controllers.PostsViewController;
+//import controllers.PostCellController;
 //import enums.Dialog;
 //import enums.Messages;
 //import javafx.stage.Stage;

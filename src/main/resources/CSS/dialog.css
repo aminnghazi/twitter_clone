@@ -1,0 +1,40 @@
+.root{
+    /*-fx-background-radius: 100px;*/
+    -fx-background-color: #555555;
+}
+.text-area{
+    -fx-text-fill: #000000;
+    text-area-background: #717171;
+    -fx-font-family: sans-serif , "Segoe UI";
+    -fx-font-size: 18;
+}
+.text-area .content {
+    -fx-background-color: text-area-background ;
+
+}
+
+.text-button {
+    -fx-background-radius: 80;
+    -fx-background-color: #1f8ee3;
+    -fx-cursor: hand;
+
+}
+.text-button:hover{
+    -fx-background-color: #3ea6f2;
+
+}
+.btn-cstm{
+    -fx-background-radius: 80;
+    -fx-cursor: hand;
+    -fx-background-color: #120101;
+    /*-fx-border-radius: 30;*/
+    /*-fx-background-color: ;*/
+}
+
+.btn-cstm:hover{
+    -fx-background-color: #a8a3a3;
+}
+.btn-cstm:pressed{
+    -fx-background-color: #848282;
+    -fx-scale-x: 99%;
+}

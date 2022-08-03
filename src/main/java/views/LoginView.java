@@ -3,10 +3,12 @@ package views;
 import controllers.LoginPageController;
 import enums.Dialog;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.stage.StageStyle;
 import models.DB;
 
@@ -16,6 +18,7 @@ public class LoginView {//controller of login-view.fxml
     public static LoginPageController controller = new LoginPageController();
     public PasswordField password;
     public TextField userName;
+    public Label error;
     boolean testMode = true;
 
     public void loginClicked(MouseEvent mouseEvent) {
@@ -42,7 +45,8 @@ public class LoginView {//controller of login-view.fxml
             }
         }
         else {
-            System.out.println(dialog);
+            error.setText(dialog.toString());
+//            System.out.println(dialog);
         }
     }
 

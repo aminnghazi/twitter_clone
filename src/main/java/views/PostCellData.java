@@ -1,17 +1,21 @@
 package views;
 
+import controllers.PostCellController;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Rectangle;
 import models.DB;
 import models.Post;
 import models.User;
@@ -20,12 +24,15 @@ import models.Utility;
 import java.io.IOException;
 
 public class PostCellData {
+    private static PostCellController controller = new PostCellController();
     @FXML
     private Label name;
     @FXML
-    private ImageView postPic;
-    @FXML
     private ImageView profilePic;
+    @FXML
+    private ImageView like;
+    @FXML
+    private ImageView comment;
     @FXML
     private Label userName;
     @FXML
@@ -40,6 +47,8 @@ public class PostCellData {
     private Label replyingTo;
     @FXML
     private Hyperlink replyID;
+    @FXML
+    private Rectangle imageRec;
 
     public PostCellData() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/post.fxml"));
@@ -55,12 +64,22 @@ public class PostCellData {
     }
     public void setInfo(Post post)
     {
+        System.out.println(DB.getLikesCount(post.getID()));
         User sender = DB.getUser(post.getSenderUsername());
+
         name.setText(sender.getFirstName() + " " + sender.getLastName());
+
         postText.setText(post.getText());
         postText.setMaxWidth(View.getScreenWidth()/3);
+
         userName.setText("@"+post.getSenderUsername());
-        postPic.setImage(View.getBaseImage());
+        if (!post.getImage().equals("-1")) {
+            Image postImage = Utility.decodeImageFile(post.getImage());
+            imageRec.setFill(new ImagePattern(postImage));
+            setImageRecSize(postImage.getWidth(), postImage.getHeight(), imageRec, 0.4);
+        }
+
+        gridPane.setPrefHeight(View.getScreenHeight()/5 + postText.getHeight() + imageRec.getHeight());
         if (!post.getParentID().equals("-1")){
             replyingTo.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
@@ -72,11 +91,31 @@ public class PostCellData {
             String parentUserName = DB.getUser(DB.getPost(post.getParentID()).getSenderUsername()).getUserName();
             replyID.setText("@"+parentUserName);
         }
-        postPic.fitWidthProperty().bind(pane.widthProperty().subtract(40));
-        postPic.fitHeightProperty().bind(pane.heightProperty().subtract(40));
-        profilePic.setImage(View.getBaseImage());
-    }
 
+        profilePic.setImage(Utility.decodeImageFile(DB.getUser(post.getSenderUsername()).getProfilePicture()));
+
+        if (DB.isLikedBy(View.getLoggedInUser().getUserName(),post.getID()))
+            like.setImage(new Image(getClass().getResource("/pics/liked.png").toExternalForm()));
+
+        like.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+            controller.handleLikingPost(post.getID());
+                System.out.println(DB.getLikesCount(post.getID()));
+//                System.out.println("clicked");
+            }
+        });
+    }
+private void setImageRecSize(double imageWidth, double imageHeight, Rectangle rectangle,double widthPortion){
+
+    imageRec.setArcHeight(50);imageRec.setArcWidth(50);
+    imageRec.setEffect(new DropShadow(5, Color.GRAY));  // Shadow
+
+    double scale = widthPortion * View.getScreenWidth()/imageWidth ;
+        imageRec.setWidth(imageWidth*scale);
+        imageRec.setHeight(imageHeight*scale);
+
+}
     public GridPane getContent()
     {
         return gridPane;

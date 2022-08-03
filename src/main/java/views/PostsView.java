@@ -1,5 +1,6 @@
 package views;
 
+import controllers.PostCell;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -14,7 +15,6 @@ import javafx.util.Callback;
 import models.DB;
 import models.Post;
 
-import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -66,7 +66,9 @@ public class PostsView  implements Initializable{
         listView.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                postClicked((Post) listView.getSelectionModel().getSelectedItem());
+                Post post = (Post) listView.getSelectionModel().getSelectedItem();
+                if (post != null)
+                    postClicked(post);
             }
         });
 

@@ -116,7 +116,7 @@ public class DB {
         try {
             ResultSet resultSet = statement.executeQuery("SELECT*FROM post WHERE postID='"+postID+"'");
             resultSet.next();
-            post = new Post(resultSet.getString("SenderID"), resultSet.getString("PostImage"), resultSet.getString("PostText"), resultSet.getString("ParentID"),resultSet.getBoolean("isAdd"));
+            post = new Post(resultSet.getString("SenderID"), Utility.decodeImageFile(resultSet.getString("PostImage")), resultSet.getString("PostText"), resultSet.getString("ParentID"),resultSet.getBoolean("isAdd"));
             Timestamp ts = new Timestamp(resultSet.getDate("CreateDate").getTime());//kal
             post.setDateCreated(ts);//kal
             post.setID(resultSet.getString("postID"));
@@ -141,7 +141,9 @@ public class DB {
         ArrayList<Post> posts = new ArrayList<>();
         ArrayList<String> postIDs = getUserPostIDs(userName);
         for(int i=0; i< postIDs.size(); i++){
-            posts.add(getPost(postIDs.get(i)));
+            Post post = getPost(postIDs.get(i));
+            if (post.getParentID().equals("-1"))
+                posts.add(post);
         }
         return posts;
     }
@@ -203,7 +205,7 @@ public class DB {
     }
     public static void addLike(String postID, String userName){
         try {
-            statement.executeUpdate("INSERT INTO like (PostID,LikeDate,LikeUserID) " +
+            statement.executeUpdate("INSERT INTO `like` (PostID,LikeDate,LikeUserID) " +
                     "VALUES ('"
                     +postID+"','"
                     +Timestamp.from(Instant.now())+"','"//kal
@@ -215,7 +217,7 @@ public class DB {
     }
     public static Dialog removeLike(String postID, String userName){
         try {
-            statement.executeUpdate("DELETE FROM Like WHERE PostID='"+postID+"' AND LikeUserID='"+userName+"'");
+            statement.executeUpdate("DELETE FROM `like` WHERE PostID='"+postID+"' AND LikeUserID='"+userName+"'");
         } catch (SQLException e) {
 //            e.printStackTrace();
             return Dialog.SUCCESS;
@@ -225,7 +227,7 @@ public class DB {
     public static boolean isLikedBy(String userName, String postID){
         boolean is = false;
         try {
-            ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) FROM like WHERE UserName='"+userName+"' AND PostID='"+postID+"'");
+            ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) FROM `like` WHERE LikeUserID='"+userName+"' AND PostID='"+postID+"'");
             resultSet.next();
             if(resultSet.getInt(1)>0){
                 is = true;
@@ -241,9 +243,10 @@ public class DB {
     public static int getLikesCount(String postID){
         int count = 0;
         try {
-            ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) FROM like WHERE UserName='"+postID+"'");
-            resultSet.next();
-            count = resultSet.getInt(1);
+            ResultSet resultSet = statement.executeQuery(
+                    "SELECT COUNT(*) FROM `like` WHERE PostID='"+postID+"'");
+            if (resultSet.next())
+              count = resultSet.getInt(1);
         } catch (SQLException e) {
             e.printStackTrace();
         }
