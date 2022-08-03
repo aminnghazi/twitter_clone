@@ -1,11 +1,11 @@
 package views;
 
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
+
 import javafx.scene.control.ListCell;
 import models.Post;
 
 public class PostCell extends ListCell<Post> {
+    private static int  num=0;
     @Override
     protected void updateItem(Post item, boolean empty) {
         super.updateItem(item, empty);
@@ -13,16 +13,12 @@ public class PostCell extends ListCell<Post> {
             setText(null);
             setGraphic(null);
         } else {
-            setText(item.toString());
-            // TODO: 8/2/2022 preload image, because update is called often 
+//            setText(item.toString());
+            // TODO: 8/2/2022 preload image, because update is called often
             // TODO: 8/2/2022 change parent
-            try {
-                Parent root = FXMLLoader.load(getClass().getResource("/fxml/post.fxml"));
-                setGraphic(root);
-            } catch (Exception e) {
-//                System.out.println("noooo");
-                e.printStackTrace();
-            }
+            PostCellData data = new PostCellData();
+            data.setInfo(item);
+            setGraphic(data.getContent());
         }
     }
 }

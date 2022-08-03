@@ -6,19 +6,23 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<GridPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.PostItem">
+<GridPane fx:id="gridPane" prefHeight="600.0" prefWidth="800.0" styleClass="post" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="10.0" prefWidth="100.0" />
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
    </columnConstraints>
    <rowConstraints>
       <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+      <RowConstraints />
    </rowConstraints>
    <children>
-      <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="TOP">
+      <ImageView fx:id="profilePic" fitHeight="64.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="TOP">
          <image>
             <Image url="@../pics/bell.png" />
          </image>
+         <GridPane.margin>
+            <Insets top="20.0" />
+         </GridPane.margin>
       </ImageView>
       <GridPane GridPane.columnIndex="1">
         <columnConstraints>
@@ -31,12 +35,12 @@
          <children>
             <HBox>
                <children>
-                  <Label fx:id="name1" text="Name Family Name">
+                  <Label fx:id="name" text="Name Family Name">
                      <font>
                         <Font name="Segoe UI Bold" size="17.0" />
                      </font>
                   </Label>
-                  <Label fx:id="name" text="\@id">
+                  <Label fx:id="userName" text="\@id" textFill="#919191">
                      <font>
                         <Font name="Segoe UI" size="15.0" />
                      </font>
@@ -46,11 +50,24 @@
                   </Label>
                </children>
             </HBox>
-            <ImageView fitHeight="200.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
-               <image>
-                  <Image url="@../pics/profile.jpg" />
-               </image>
-            </ImageView>
+            <Pane fx:id="pane" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+               <children>
+                  <VBox fx:id="vbox">
+                     <children>
+                        <Label fx:id="postText" text="Label" wrapText="true">
+                           <font>
+                              <Font name="Segoe UI" size="18.0" />
+                           </font>
+                        </Label>
+                        <HBox alignment="CENTER" VBox.vgrow="SOMETIMES">
+                           <children>
+                                    <ImageView fx:id="postPic" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </Pane>
          </children>
       </GridPane>
    </children>

@@ -2,19 +2,40 @@ package views;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import models.User;
-
 import java.io.IOException;
-import java.util.Optional;
 
 public abstract class View extends Application {
     private static User loggedInUser = null;
+    private static double screenWidth=1920;
+    private static double screenHeight=1080;
+
+    public static double getScreenWidth() {
+        return screenWidth;
+    }
+
+    public static void setScreenWidth(double screenWidth) {
+        View.screenWidth = screenWidth;
+    }
+
+    public static double getScreenHeight() {
+        return screenHeight;
+    }
+
+    public static void setScreenHeight(double screenHeight) {
+        View.screenHeight = screenHeight;
+    }
+
+    private static Image baseImage = new Image(View.class.getResource("/pics/profile.jpg").toString());
+
+    public static Image getBaseImage() {
+        return baseImage;
+    }
 
     public static Stage getStage() {
         return stage;
@@ -49,5 +70,4 @@ public abstract class View extends Application {
         }
     }
 
-    //this class has no controller for now.Currently, it only opens other pages
 }

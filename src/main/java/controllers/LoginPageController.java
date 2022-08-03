@@ -25,13 +25,15 @@ public class LoginPageController extends Controller{
         if ((dialog = this.validatePassword(password, repeatedPassword)) != Dialog.SUCCESS){
             return dialog;//password problem
         }
+        if (securityAnswer == null)
+            return Dialog.EMPTY_SECURITY_QUESTION;
         if (type.toLowerCase().equals("normal")){
-            User user = new User(userName,password,securityQuestion,securityAnswer,false,null);
+            User user = new User(userName,password,securityQuestion,securityAnswer,false,null,name,lastName);
             DB.addUser(user);
             return Dialog.SUCCESS;//normal user created
         }
         if (type.toLowerCase().equals("business")){
-            User user = new User(userName,password,securityQuestion,securityAnswer,true,"-1");
+            User user = new User(userName,password,securityQuestion,securityAnswer,true,"-1",name,lastName);
             DB.addUser(user);
             return Dialog.SUCCESS;//business user created
         }

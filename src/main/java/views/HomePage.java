@@ -12,6 +12,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import models.DB;
 
 import java.io.IOException;
 
@@ -21,8 +22,9 @@ public class HomePage extends View{
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        GridPane page = FXMLLoader.load(this.getClass().getResource("/fxml/home-page.fxml"));
-        Scene scene = new Scene(page);
+        GridPane postsView = FXMLLoader.load(this.getClass().getResource("/fxml/home-page.fxml"));
+        Scene scene = new Scene(postsView);
+        System.out.println(scene);
         primaryStage.setScene(scene);
         Screen screen = Screen.getPrimary();
         Rectangle2D bounds = screen.getVisualBounds();
@@ -55,12 +57,9 @@ public class HomePage extends View{
     }
     private void loadPostsView(){
         // TODO: 8/2/2022 change from parent
-        try {
-            Parent posts = FXMLLoader.load(this.getClass().getResource("/fxml/posts-view.fxml"));
-            middleContainer.getChildren().clear();
-            middleContainer.getChildren().add(posts);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        //            Parent posts = FXMLLoader.load(this.getClass().getResource("/fxml/posts-view.fxml"));
+        PostsView postsView = new PostsView();
+        middleContainer.getChildren().clear();
+        middleContainer.getChildren().add(postsView.getStackPane());
     }
 }

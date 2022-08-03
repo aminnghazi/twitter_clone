@@ -24,7 +24,8 @@ public enum Dialog {
     SELF_FOLLOW("Can not follow yourself"),
     ALREADY_FOLLOWING("already following this user"),
     EMPTY_NAME("First name field can not be empty"),
-    EMPTY_LAST_NAME("Last name field can not be empty");
+    EMPTY_LAST_NAME("Last name field can not be empty"),
+    EMPTY_SECURITY_QUESTION("answer to security question cannot be empty");
 
     private String dialog;
 

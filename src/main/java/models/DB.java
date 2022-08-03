@@ -45,9 +45,8 @@ public class DB {
             ResultSet  resultSet = statement.executeQuery("SELECT*FROM user WHERE UserName='"+userName+"'");
             resultSet.next();
             user = new User(resultSet.getString("UserName"), resultSet.getString("Password"), resultSet.getString("securityQuestionType"),
-                    resultSet.getString("securityQuestionAnswer"),resultSet.getBoolean("Business"),resultSet.getString("ProfilePicture"));
-            user.setFirstName(resultSet.getString("FirstName"));
-            user.setLastName(resultSet.getString("LastName"));
+                    resultSet.getString("securityQuestionAnswer"),resultSet.getBoolean("Business"),resultSet.getString("ProfilePicture"),
+                    resultSet.getString("FirstName"),resultSet.getString("LastName"));
             Timestamp ts = new Timestamp(resultSet.getDate("JointDate").getTime());//kal
             user.setJoinDate(ts);//kal
             user.setBirthDate(resultSet.getDate("BirthDate").toLocalDate());
