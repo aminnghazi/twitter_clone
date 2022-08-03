@@ -59,7 +59,8 @@ public class PostsViewController extends Controller{
             isAd = true;
         else
             isAd = false;
-        new Post(View.getLoggedInUser().getUserName(), null, text, parentPost.getID(),isAd);
+        Post comment = new Post(View.getLoggedInUser().getUserName(), null, text, parentPost.getID(),isAd);
+        DB.addPost(comment);
         return Dialog.COMMENT_ADDED_SUCCESSFULLY;
     }
 }

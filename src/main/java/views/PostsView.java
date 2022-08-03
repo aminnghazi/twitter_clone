@@ -55,7 +55,7 @@ public class PostsView  implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         posts = FXCollections.observableArrayList();
-        posts.setAll(DB.getAllPosts());
+        posts.setAll(DB.getFollowingsPost(View.getLoggedInUser().getUserName()));
         listView.setItems(posts);
         listView.setCellFactory(new Callback<ListView<Post>, ListCell<Post>>() {
             @Override
@@ -72,9 +72,11 @@ public class PostsView  implements Initializable{
 
     }
     private void postClicked(Post post){
-        posts.setAll(DB.getComments(post.getID()));
+//        listView.getItems().add(post);
+        posts.clear();
+        posts.add(post);
+        posts.addAll(DB.getComments(post.getID()));
         listView.setItems(posts);
-        listView.getItems().add(post);
 
 
     }

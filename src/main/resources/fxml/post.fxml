@@ -30,6 +30,7 @@
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" percentHeight="5.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" percentHeight="5.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
@@ -50,7 +51,7 @@
                   </Label>
                </children>
             </HBox>
-            <Pane fx:id="pane" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+            <Pane fx:id="pane" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                <children>
                   <VBox fx:id="vbox">
                      <children>
@@ -68,6 +69,26 @@
                   </VBox>
                </children>
             </Pane>
+            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1">
+               <children>
+                  <Label fx:id="replyingTo">
+                     <HBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="12.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <Hyperlink fx:id="replyID">
+                     <HBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Hyperlink>
+               </children>
+            </HBox>
          </children>
       </GridPane>
    </children>

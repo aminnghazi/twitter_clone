@@ -1,10 +1,13 @@
 package views;
 
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -33,7 +36,10 @@ public class PostCellData {
     private Pane pane;
     @FXML
     private VBox vbox;
-
+    @FXML
+    private Label replyingTo;
+    @FXML
+    private Hyperlink replyID;
 
     public PostCellData() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/post.fxml"));
@@ -55,7 +61,17 @@ public class PostCellData {
         postText.setMaxWidth(View.getScreenWidth()/3);
         userName.setText("@"+post.getSenderUsername());
         postPic.setImage(View.getBaseImage());
-        postPic.setPreserveRatio(true);
+        if (!post.getParentID().equals("-1")){
+            replyingTo.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    System.out.println("Go to profile");// TODO: 8/3/2022 add feature
+                }
+            });
+            replyingTo.setText("Replying to ");
+            String parentUserName = DB.getUser(DB.getPost(post.getParentID()).getSenderUsername()).getUserName();
+            replyID.setText("@"+parentUserName);
+        }
         postPic.fitWidthProperty().bind(pane.widthProperty().subtract(40));
         postPic.fitHeightProperty().bind(pane.heightProperty().subtract(40));
         profilePic.setImage(View.getBaseImage());
