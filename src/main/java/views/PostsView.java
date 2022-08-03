@@ -72,6 +72,10 @@ public class PostsView  implements Initializable{
 
     }
     private void postClicked(Post post){
+        posts.setAll(DB.getComments(post.getID()));
+        listView.setItems(posts);
+        listView.getItems().add(post);
+
 
     }
 }

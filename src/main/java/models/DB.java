@@ -183,12 +183,13 @@ public class DB {
         return allFollowingPost;
     }
     public static ArrayList<Post> getComments(String parentID){
-        ArrayList<Post> posts = getAllPosts();
+        ArrayList<Post> posts = getAllPosts();// TODO: 8/3/2022 not efficient
+        ArrayList<Post> comments = new ArrayList<>();
         for (Post post : posts) {
          if (post.getParentID().equals(parentID))
-             posts.add(post);
+             comments.add(post);
         }
-        return posts;
+        return comments;
     }
 
     public static Dialog editPost(String postID, String newText,String newPostImage){
