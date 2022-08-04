@@ -32,7 +32,7 @@ public class TweetView implements Initializable {
     public Label error;
     public TextArea postText;
     String parentID="-1";
-    Image postImage;
+    String postImage = "-1";
 
 
 
@@ -65,16 +65,7 @@ public class TweetView implements Initializable {
             error.setText(dialog.toString());
     }
 
-    public Dialog handleAddComment(String text, Post parentPost) {
-        boolean isAd;
-        if (View.getLoggedInUser().isBusiness())
-            isAd = true;
-        else
-            isAd = false;
-        Post comment = new Post(View.getLoggedInUser().getUserName(), null, text, parentPost.getID(),isAd);
-        DB.addPost(comment);
-        return Dialog.COMMENT_ADDED_SUCCESSFULLY;
-    }
+
 
     public void attachImage(MouseEvent mouseEvent) {
         Button button = (Button) mouseEvent.getSource();
@@ -84,6 +75,7 @@ public class TweetView implements Initializable {
                 new FileChooser.ExtensionFilter("Image files", "*.png")
                 ,new FileChooser.ExtensionFilter("Image files", "*.jpg"));
         File file = fileChooser.showOpenDialog(stage);
+        postImage = Utility.encodeImageFile(file);
     }
 
     public void setParentID(String parentID) {

@@ -134,7 +134,7 @@
 }
 
 .list-cell:pressed {
-    -fx-background-color: #79797d;
+    -fx-background-color: #a8a8ab;
 }
 
 /*.list-cell:selected {*/
@@ -1275,7 +1275,7 @@
     /*-fx-scale-x: 0;*/
 }
 .list-view .scroll-bar:horizontal {
-    /*-fx-scale-y: 0;*/
+    -fx-scale-y: 0;
 }
 
 .text-button {
@@ -1321,10 +1321,7 @@
     /*-fx-scale-x: 99.5%;*/
     /*-fx-scale-y: 99.5%;*/
 }
-.post:focused{
-    -fx-background-color: rgba(156, 37, 37, 0.88);
 
-}
 
 .round-corner{
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);

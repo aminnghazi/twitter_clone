@@ -116,7 +116,7 @@ public class DB {
         try {
             ResultSet resultSet = statement.executeQuery("SELECT*FROM post WHERE postID='"+postID+"'");
             resultSet.next();
-            post = new Post(resultSet.getString("SenderID"), Utility.decodeImageFile(resultSet.getString("PostImage")), resultSet.getString("PostText"), resultSet.getString("ParentID"),resultSet.getBoolean("isAdd"));
+            post = new Post(resultSet.getString("SenderID"), resultSet.getString("PostImage"), resultSet.getString("PostText"), resultSet.getString("ParentID"),resultSet.getBoolean("isAdd"));
             Timestamp ts = new Timestamp(resultSet.getDate("CreateDate").getTime());//kal
             post.setDateCreated(ts);//kal
             post.setID(resultSet.getString("postID"));

@@ -1,6 +1,5 @@
 package models;
 
-import javafx.scene.image.Image;
 import views.View;
 
 import java.time.DateTimeException;
@@ -13,7 +12,7 @@ public class Post extends Media {
     private int viewsCount;
     private boolean isAd;
 
-    public Post(String senderUsername, Image image, String text, String parentID, boolean isAd) {
+    public Post(String senderUsername, String image, String text,String parentID,boolean isAd) {
         super(senderUsername, image, text, parentID);
         this.isAd = isAd;
 //        DB.allPosts.add(this);

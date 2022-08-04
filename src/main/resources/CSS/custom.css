@@ -1,3 +1,25 @@
 .linktext{
 
 }
+.label-small{
+    font-family: "Segoe UI",sans-serif;
+    font-size: 12px;
+}
+.label-normal{
+    font-family: "Segoe UI",sans-serif;
+    font-size: 18px;
+}
+.label-normal-bold{
+    font-family: "Segoe UI",sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+}
+.label-big{
+    font-family: "Segoe UI",sans-serif;
+    font-size: 25px;
+}
+.label-big-bold{
+    font-family: "Segoe UI",sans-serif;
+    -fx-font-weight: bold;
+    font-size: 25px;
+}

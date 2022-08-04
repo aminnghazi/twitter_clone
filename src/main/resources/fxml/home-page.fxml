@@ -144,5 +144,10 @@
             <VBox fx:id="middleContainer" alignment="CENTER" />
          </children>
       </HBox>
+      <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2">
+         <children>
+            <VBox fx:id="userContainer" prefHeight="200.0" prefWidth="100.0" />
+         </children>
+      </HBox>
    </children>
 </GridPane>

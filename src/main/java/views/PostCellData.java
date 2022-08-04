@@ -1,6 +1,7 @@
 package views;
 
 import controllers.PostCellController;
+import enums.Dialog;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -62,9 +63,10 @@ public class PostCellData {
             throw new RuntimeException(e);
         }
     }
+
     public void setInfo(Post post)
     {
-        System.out.println(DB.getLikesCount(post.getID()));
+
         User sender = DB.getUser(post.getSenderUsername());
 
         name.setText(sender.getFirstName() + " " + sender.getLastName());
@@ -80,6 +82,7 @@ public class PostCellData {
         }
 
         gridPane.setPrefHeight(View.getScreenHeight()/5 + postText.getHeight() + imageRec.getHeight());
+
         if (!post.getParentID().equals("-1")){
             replyingTo.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
@@ -100,9 +103,18 @@ public class PostCellData {
         like.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-            controller.handleLikingPost(post.getID());
-                System.out.println(DB.getLikesCount(post.getID()));
-//                System.out.println("clicked");
+            Dialog dialog = controller.handleLikingPost(post.getID());
+            if (dialog == Dialog.MESSAGE_LIKE_REMOVED)
+                like.setImage(new Image(getClass().getResource("/pics/notLiked.png").toExternalForm()));
+            else if (dialog == Dialog.MESSAGE_LIKED)
+                like.setImage(new Image(getClass().getResource("/pics/liked.png").toExternalForm()));
+
+            }
+        });
+        comment.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
             }
         });
     }

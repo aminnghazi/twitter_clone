@@ -14,9 +14,6 @@ public class PostCell extends ListCell<Post> {
             setText(null);
             setGraphic(null);
         } else {
-//            setText(item.toString());
-            // TODO: 8/2/2022 preload image, because update is called often
-            // TODO: 8/2/2022 change parent
             PostCellData data = new PostCellData();
             data.setInfo(item);
             setGraphic(data.getContent());

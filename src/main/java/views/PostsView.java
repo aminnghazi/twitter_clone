@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.util.Callback;
@@ -54,9 +55,7 @@ public class PostsView  implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        posts = FXCollections.observableArrayList();
-        posts.setAll(DB.getFollowingsPost(View.getLoggedInUser().getUserName()));
-        listView.setItems(posts);
+        fillPosts();
         listView.setCellFactory(new Callback<ListView<Post>, ListCell<Post>>() {
             @Override
             public ListCell<Post> call(ListView<Post> param) {
@@ -65,12 +64,18 @@ public class PostsView  implements Initializable{
         });
         listView.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
-            public void handle(MouseEvent event) {
-                Post post = (Post) listView.getSelectionModel().getSelectedItem();
-                if (post != null)
-                    postClicked(post);
+            public void handle(MouseEvent mouseEvent) {
+                if(mouseEvent.getButton().equals(MouseButton.PRIMARY)){
+                    if(mouseEvent.getClickCount() == 2){
+                        Post post = (Post) listView.getSelectionModel().getSelectedItem();
+                        if (post != null)
+                            postClicked(post);
+                    }
+                }
             }
         });
+//        stackPane.addEventFilter(MouseEvent.ANY, e -> System.out.println("\n" + e + "\n"));
+
 
     }
     private void postClicked(Post post){
@@ -79,7 +84,11 @@ public class PostsView  implements Initializable{
         posts.add(post);
         posts.addAll(DB.getComments(post.getID()));
         listView.setItems(posts);
+    }
 
-
+    private void fillPosts(){
+        posts = FXCollections.observableArrayList();
+        posts.setAll(DB.getFollowingsPost(View.getLoggedInUser().getUserName()));
+        listView.setItems(posts);
     }
 }

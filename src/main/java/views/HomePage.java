@@ -19,6 +19,7 @@ import java.io.IOException;
 public class HomePage extends View{
     public GridPane homePage;
     public VBox middleContainer;
+    public VBox userContainer;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -34,6 +35,20 @@ public class HomePage extends View{
     }
     public void initialize(){
         loadPostsView();
+        loadUsers();
+    }
+
+    private void loadPostsView(){
+        // TODO: 8/2/2022 change from parent
+        //            Parent posts = FXMLLoader.load(this.getClass().getResource("/fxml/posts-view.fxml"));
+        PostsView postsView = new PostsView();
+        middleContainer.getChildren().clear();
+        middleContainer.getChildren().add(postsView.getStackPane());
+    }
+    private void loadUsers() {
+        UsersView usersView = new UsersView();
+        userContainer.getChildren().clear();
+        userContainer.getChildren().add(usersView.getStackPane());
     }
 
     public void homeClicked(MouseEvent mouseEvent) {
@@ -55,11 +70,6 @@ public class HomePage extends View{
             e.printStackTrace();
         }
     }
-    private void loadPostsView(){
-        // TODO: 8/2/2022 change from parent
-        //            Parent posts = FXMLLoader.load(this.getClass().getResource("/fxml/posts-view.fxml"));
-        PostsView postsView = new PostsView();
-        middleContainer.getChildren().clear();
-        middleContainer.getChildren().add(postsView.getStackPane());
-    }
+
+
 }
