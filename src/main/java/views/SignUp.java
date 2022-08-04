@@ -110,7 +110,7 @@ public class SignUp implements Initializable {
     }
         Dialog dialog = LoginView.controller.verifyRegister
                 (userName,firstName,lastName,password,repeatedPassword,accountType,
-                        securityQestion,answer);
+                        securityQestion,answer,profile);
         if (dialog == Dialog.SUCCESS) {
             View.showDialog("Account created successfully");
             return;

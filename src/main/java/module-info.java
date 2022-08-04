@@ -11,6 +11,7 @@ module com.example.twitter {
 
     opens views to javafx.fxml;
     exports views;
+
     exports controllers;
     opens controllers to javafx.fxml;
 }

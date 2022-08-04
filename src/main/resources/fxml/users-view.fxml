@@ -3,9 +3,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<StackPane fx:id="stackPane" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.UsersView">
+<StackPane fx:id="stackPane" prefHeight="2500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ListView fx:id="listView" prefHeight="200.0" prefWidth="200.0" />
+      <ListView fx:id="listView" editable="true" prefHeight="200.0" prefWidth="594.0" />
    </children>
 </StackPane>

@@ -4,13 +4,13 @@ import enums.Dialog;
 import models.DB;
 import views.View;
 
-public class SuggestonsViewController {
-    public SuggestonsViewController() {
+public class UsersViewController {
+    public UsersViewController() {
     }
 
     public Dialog handleFollowing(String userName) {
         String currentUserName = View.getLoggedInUser().getUserName();
-        if (userName == currentUserName)
+        if (userName.equals(currentUserName))
             return Dialog.SELF_FOLLOW;
         Dialog dialog;
         if (!DB.isFollowing(currentUserName,userName)) {

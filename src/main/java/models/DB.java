@@ -10,6 +10,7 @@ import java.lang.*;
 public class DB {
     private static Statement statement;
     public static Dialog addUser(User user){
+//        System.out.println(user.getProfilePicture());
         short a;
         if (user.isBusiness())
             a=1;

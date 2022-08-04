@@ -18,7 +18,7 @@ public class LoginPageController extends Controller{
     }
 
     public Dialog verifyRegister(String userName,String name,String lastName, String password,String repeatedPassword,String type,
-                                 String securityQuestion, String securityAnswer){
+                                 String securityQuestion, String securityAnswer, String profile){
         if (doesAccountExist(userName))
             return Dialog.USER_EXIST;//duplicate account
         Dialog dialog;
@@ -28,12 +28,12 @@ public class LoginPageController extends Controller{
         if (securityAnswer == null)
             return Dialog.EMPTY_SECURITY_QUESTION;
         if (type.toLowerCase().equals("normal")){
-            User user = new User(userName,password,securityQuestion,securityAnswer,false,null,name,lastName);
+            User user = new User(userName,password,securityQuestion,securityAnswer,false,profile,name,lastName);
             DB.addUser(user);
             return Dialog.SUCCESS;//normal user created
         }
         if (type.toLowerCase().equals("business")){
-            User user = new User(userName,password,securityQuestion,securityAnswer,true,"-1",name,lastName);
+            User user = new User(userName,password,securityQuestion,securityAnswer,true,profile,name,lastName);
             DB.addUser(user);
             return Dialog.SUCCESS;//business user created
         }

@@ -35,7 +35,7 @@ public class HomePage extends View{
     }
     public void initialize(){
         loadPostsView();
-        loadUsers();
+        loadUsersView();
     }
 
     private void loadPostsView(){
@@ -45,7 +45,7 @@ public class HomePage extends View{
         middleContainer.getChildren().clear();
         middleContainer.getChildren().add(postsView.getStackPane());
     }
-    private void loadUsers() {
+    private void loadUsersView() {
         UsersView usersView = new UsersView();
         userContainer.getChildren().clear();
         userContainer.getChildren().add(usersView.getStackPane());

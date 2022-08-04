@@ -23,3 +23,25 @@
     -fx-font-weight: bold;
     font-size: 25px;
 }
+.button-follow{
+    -fx-background-radius: 50;
+    -fx-background-color: #209bcb;
+    -fx-border-style: none;
+    -fx-border-insets: 0;
+    -fx-font-size: 14px;
+    -fx-font-weight: 400;
+    -fx-min-width: 80px;
+    -fx-min-height: 32px;
+
+}
+.button-unFollow{
+    -fx-background-radius: 50;
+    -fx-background-color: transparent;
+    -fx-background-color: #a0a0a0;
+    -fx-border-insets: 0;
+    -fx-border-style: none;
+    -fx-font-size: 14px;
+    -fx-font-weight: 400;
+    -fx-min-width: 80px;
+    -fx-min-height: 32px;
+}

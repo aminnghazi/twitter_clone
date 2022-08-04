@@ -21,7 +21,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class PostsView  implements Initializable{
-
+    // TODO: 8/4/2022 comment button not functional
     @FXML
     private  ListView listView;
     @FXML
@@ -35,7 +35,7 @@ public class PostsView  implements Initializable{
         fxmlLoader.setController(this);
         try
         {
-            StackPane stackPane = (StackPane) fxmlLoader.load();
+             stackPane = (StackPane) fxmlLoader.load();
         }
         catch (IOException e)
         {

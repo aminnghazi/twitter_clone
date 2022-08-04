@@ -145,6 +145,10 @@
     -fx-background-color: rgb(255, 255, 255);
     -fx-cursor: hand;
 }
+.list-cell:row-selection {
+    -fx-background-color: rgb(135, 55, 55);
+
+}
 
 .list-view {
     -fx-background-color: transparent;

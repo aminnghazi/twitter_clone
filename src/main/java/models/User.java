@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 public class User {
 
@@ -30,6 +31,7 @@ public class User {
         this.birthDate = LocalDate.now();// TODO: 7/30/2022 change with real one
         this.firstName = firstName;
         this.lastName = lastName;
+        System.out.println(profilePicture);
         if (profilePicture.equals("null"))
             this.profilePicture ="-1";
         else
@@ -39,10 +41,11 @@ public class User {
 //        joinDate = currentTime.format(formatter);
 
     }
+    public ArrayList<User> getSuggestedUsers(){
+        return DB.getAllUsers();
+    }
 
     private boolean isBusiness;
-
-
 
     public void setUserName(String userName) {
         this.userName = userName;
