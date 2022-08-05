@@ -2,26 +2,31 @@
 
 }
 .label-small{
-    font-family: "Segoe UI",sans-serif;
-    font-size: 12px;
+    -font-family: "Segoe UI",sans-serif;
+    -font-size: 12px;
 }
 .label-normal{
-    font-family: "Segoe UI",sans-serif;
-    font-size: 18px;
+    -font-family: "Segoe UI",sans-serif;
+    -font-size: 18px;
 }
 .label-normal-bold{
-    font-family: "Segoe UI",sans-serif;
-    font-size: 18px;
-    font-weight: bold;
+    -font-family: "Segoe UI",sans-serif;
+    -font-size: 18px;
+    -font-weight: bold;
 }
 .label-big{
-    font-family: "Segoe UI",sans-serif;
-    font-size: 25px;
+    -font-family: "Segoe UI",sans-serif;
+    -font-size: 25px;
 }
 .label-big-bold{
-    font-family: "Segoe UI",sans-serif;
+    -font-family: "Segoe UI",sans-serif;
     -fx-font-weight: bold;
-    font-size: 25px;
+    -font-size: 25px;
+}
+.label-huge-bold{
+    -font-family: "Segoe UI",sans-serif;
+    -fx-font-weight: bold;
+    -font-size: 36px;
 }
 .button-follow{
     -fx-background-radius: 50;
@@ -29,10 +34,14 @@
     -fx-border-style: none;
     -fx-border-insets: 0;
     -fx-font-size: 14px;
+    /*-fx-padding: 2 2 2 10;*/
+    -fx-alignment: center;
     -fx-font-weight: 400;
     -fx-min-width: 80px;
     -fx-min-height: 32px;
-
+}
+.button-follow:hover{
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0.5, 0.0, 0.0);
 }
 .button-unFollow{
     -fx-background-radius: 50;
@@ -41,7 +50,31 @@
     -fx-border-insets: 0;
     -fx-border-style: none;
     -fx-font-size: 14px;
+    -fx-alignment: center;
     -fx-font-weight: 400;
     -fx-min-width: 80px;
     -fx-min-height: 32px;
+}
+.button-unFollow:hover{
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0.5, 0.0, 0.0);
+}
+
+.btn-image-circular{
+    -fx-background-color: transparent;
+    -fx-background-radius:80;
+}
+.btn-image-circular:hover{
+    -fx-effect: dropshadow(gaussian, rgba(132, 132, 132, 0.13), 10, 0.5, 0.0, 0.0);
+}
+
+.hBox-borderd{
+    -fx-border-style: none none solid none;
+    -fx-border-width: 0.25;
+    -fx-border-color: #747474;
+}
+.image-clickable{
+
+}
+.image-clickable:hover{
+    -fx-effect: dropshadow(gaussian, rgb(26, 122, 125), 10, 0.5, 0.0, 0.0);
 }

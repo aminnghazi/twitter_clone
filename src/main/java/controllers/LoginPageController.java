@@ -34,6 +34,7 @@ public class LoginPageController extends Controller{
         }
         if (type.toLowerCase().equals("business")){
             User user = new User(userName,password,securityQuestion,securityAnswer,true,profile,name,lastName);
+            System.out.println("business");
             DB.addUser(user);
             return Dialog.SUCCESS;//business user created
         }

@@ -78,9 +78,8 @@ public class SignUp implements Initializable {
             switch (AccountType.getValue().toString().toLowerCase()) {
                 case "normal account":
                     accountType = "normal";
-                    System.out.println(accountType);
                     break;
-                case "Business account":
+                case "business account":
                     accountType = "business";
                     break;
                 default:

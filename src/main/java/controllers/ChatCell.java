@@ -2,11 +2,10 @@ package controllers;
 
 import javafx.scene.control.ListCell;
 import models.Card;
-import models.Post;
-import views.PostCellData;
+import views.ChatCellData;
 import views.UserCellData;
 
-public class UserCell extends ListCell<Card> {
+public class ChatCell extends ListCell<Card> {
     @Override
     protected void updateItem(Card item, boolean empty) {
         super.updateItem(item, empty);
@@ -14,7 +13,7 @@ public class UserCell extends ListCell<Card> {
             setText(null);
             setGraphic(null);
         } else {
-            UserCellData data = new UserCellData();
+            ChatCellData data = new ChatCellData();
             data.setInfo(item);
             setGraphic(data.getContent());
         }

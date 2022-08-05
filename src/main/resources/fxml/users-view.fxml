@@ -1,10 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 <StackPane fx:id="stackPane" prefHeight="2500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ListView fx:id="listView" editable="true" prefHeight="200.0" prefWidth="594.0" />
+      <VBox prefHeight="200.0" prefWidth="100.0">
+         <children>
+            <HBox alignment="CENTER_LEFT" prefHeight="81.0" prefWidth="501.0">
+               <children>
+                  <Label styleClass="label-huge-bold" text="Suggestions">
+                     <font>
+                        <Font size="25.0" />
+                     </font></Label>
+               </children>
+               <padding>
+                  <Insets bottom="10.0" left="20.0" top="10.0" />
+               </padding>
+            </HBox>
+            <ListView fx:id="listView" editable="true" prefHeight="2460.0" prefWidth="501.0" />
+         </children>
+      </VBox>
    </children>
+   <stylesheets>
+      <URL value="@../CSS/custom.css" />
+   </stylesheets>
 </StackPane>

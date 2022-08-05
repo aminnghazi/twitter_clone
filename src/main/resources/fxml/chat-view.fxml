@@ -2,64 +2,59 @@
 
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.shape.*?>
 
-
-<GridPane xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane prefHeight="1620.0" prefWidth="1872.0" stylesheets="@../CSS/custom.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.ChatView">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
    </columnConstraints>
    <rowConstraints>
-      <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" percentHeight="15.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" percentHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
    </rowConstraints>
    <children>
-      <AnchorPane prefHeight="400.0" prefWidth="600.0">
-
-
-
-          <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #17212B;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
-              <children>
-                  <VBox alignment="CENTER_LEFT" spacing="5.0" HBox.hgrow="ALWAYS">
-                      <HBox.margin>
-                          <Insets />
-                      </HBox.margin>
-                      <children>
-                          <Label fx:id="chatRoomNameLabel" text="Chat room" textAlignment="CENTER" textFill="WHITE">
-                              <font>
-                                  <Font name="Segoe UI Bold" size="20.0" />
-                              </font>
-                          </Label>
-                          <Label fx:id="lastMessageLabel" text="Last Seen recently..." textAlignment="CENTER" textFill="#92a3af">
-                              <font>
-                                  <Font name="Segoe UI" size="16.0" />
-                              </font>
-                          </Label>
-                      </children>
-                  </VBox>
-                  <HBox alignment="CENTER_RIGHT" prefHeight="68.0" prefWidth="549.0" spacing="20.0">
-                      <children>
-<!--                    <ImageView fitHeight="40.0" fitWidth="40.0" onMouseClicked="#searchChatRoom" pickOnBounds="true" preserveRatio="true">-->
-<!--                        <image>-->
-<!--                            <Image url="@../resources/img/search.png" />-->
-<!--                        </image>-->
-<!--                    </ImageView>-->
-<!--                    <ImageView fitHeight="40.0" fitWidth="40.0" onMouseClicked="#settingsButtonClicked" pickOnBounds="true" preserveRatio="true">-->
-<!--                        <image>-->
-<!--                            <Image url="@../resources/img/settings.png" />-->
-<!--                        </image>-->
-<!--                    </ImageView>-->
-                </children>
-                      <padding>
-                          <Insets right="20.0" />
-                      </padding>
-                  </HBox>
-              </children>
-              <padding>
-                  <Insets left="20.0" />
-              </padding>
-          </HBox>
-      
-      </AnchorPane>
+      <HBox prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <Ellipse fill="DODGERBLUE" radiusX="31.0" radiusY="31.0" stroke="TRANSPARENT" strokeType="INSIDE">
+               <HBox.margin>
+                  <Insets bottom="2.0" left="10.0" top="10.0" />
+               </HBox.margin></Ellipse>
+            <VBox>
+               <children>
+                  <Label fx:id="name" styleClass="label-big-bold" text="name family name" />
+                  <Label fx:id="id" styleClass="label-big" text="\@id" textFill="#848484" />
+               </children>
+               <HBox.margin>
+                  <Insets bottom="2.0" left="10.0" right="2.0" top="5.0" />
+               </HBox.margin>
+            </VBox>
+         </children>
+      </HBox>
+      <HBox prefHeight="100.0" prefWidth="200.0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
+         <children>
+            <Button fx:id="image" mnemonicParsing="false" styleClass="btn-image-circular">
+               <graphic>
+                  <ImageView fitHeight="44.0" fitWidth="44.0" onMouseClicked="#galleryButtonClicked" pickOnBounds="true" preserveRatio="true" styleClass="btn-iamger-circular">
+                     <image>
+                        <Image url="@../pics/gallery.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <TextField onKeyPressed="#keyPressed" prefHeight="55.0" prefWidth="474.0" HBox.hgrow="SOMETIMES" />
+            <Button fx:id="send" mnemonicParsing="false" styleClass="btn-image-circular">
+               <graphic>
+                  <ImageView fitHeight="44.0" fitWidth="44.0" onMouseClicked="#sendClicked" pickOnBounds="true" preserveRatio="true" styleClass="btn">
+                     <image>
+                        <Image url="@../pics/send.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </children>
+      </HBox>
    </children>
 </GridPane>

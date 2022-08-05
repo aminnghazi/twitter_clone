@@ -15,7 +15,7 @@
         <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
     </rowConstraints>
     <children>
-        <VBox fx:id="customItem" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
+        <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
             <children>
                 <HBox>
                     <children>
@@ -34,6 +34,11 @@
                         <Insets left="10.0" top="10.0" />
                     </VBox.margin>
                 </HBox>
+            <VBox fx:id="customItem" prefHeight="200.0" prefWidth="100.0">
+               <padding>
+                  <Insets left="20.0" top="10.0" />
+               </padding>
+            </VBox>
             </children>
         </VBox>
         <Circle fx:id="profilePic" fill="DODGERBLUE" radius="30.0" stroke="TRANSPARENT" strokeType="INSIDE">

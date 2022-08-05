@@ -31,7 +31,7 @@ public class User {
         this.birthDate = LocalDate.now();// TODO: 7/30/2022 change with real one
         this.firstName = firstName;
         this.lastName = lastName;
-        System.out.println(profilePicture);
+//        System.out.println(profilePicture);
         if (profilePicture.equals("null"))
             this.profilePicture ="-1";
         else

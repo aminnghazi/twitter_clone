@@ -509,6 +509,21 @@ public class DB {
             return Dialog.OPERATION_FAILED;
         }
     }
+    public static ArrayList<Message> getMessages(String chatID){
+        ArrayList<Message> messages = new ArrayList<>();
+        try {
+            ResultSet resultSet = statement.executeQuery("SELECT GroupID FROM message WHERE GroupID='"+chatID+"'");//kal
+            while (resultSet.next()){
+                Message message = new Message(resultSet.getString("SenderID"),
+                        resultSet.getString("PhotoMessage"),resultSet.getString("Text"),
+                        resultSet.getString("GroupID"));
+                Timestamp ts = new Timestamp(resultSet.getDate("GroupID").getTime());
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return messages;
+    }
     public static Dialog editMessage(int messageID,String text, String photoID){
         try {
             statement.executeUpdate("UPDATE message SET Text='"+text+"' PhotoMessage='"+photoID+"'+ WHERE MessageID='"+messageID+"'");
