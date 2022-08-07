@@ -31,6 +31,7 @@ public class UserCellData {
     private Circle profilePic;
     @FXML
     private VBox customItem;
+
     private static UsersViewController controller = new UsersViewController();
     public UserCellData() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/user.fxml"));

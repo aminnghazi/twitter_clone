@@ -13,7 +13,7 @@ public enum Dialog {
     USER_DOES_NOT_EXIST("User doesn not exist"),
     WRONG_ANSWER("wrong answer to security question"),
     OPERATION_FAILED("operation failed with unknown error"),
-    EMPTY_TEXT("Posts text can not be empty"),
+    EMPTY_TEXT("Text can not be empty"),
     MESSAGE_LIKED("you liked this message"),
     MESSAGE_LIKE_REMOVED("You removed your like"),
     COMMENT_ADDED_SUCCESSFULLY("Comment added successfully"),
@@ -25,7 +25,10 @@ public enum Dialog {
     ALREADY_FOLLOWING("already following this user"),
     EMPTY_NAME("First name field can not be empty"),
     EMPTY_LAST_NAME("Last name field can not be empty"),
-    EMPTY_SECURITY_QUESTION("answer to security question cannot be empty");
+    EMPTY_SECURITY_QUESTION("answer to security question cannot be empty"),
+    POST_DOES_NOT_EXIST("this post does not exist"),
+    EMPTY_GROUP_NAME("group name cant be empty"),
+    MINIMUM_MEMBER("groups must have at least two members");
 
     private String dialog;
 

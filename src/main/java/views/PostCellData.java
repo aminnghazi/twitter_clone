@@ -17,6 +17,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.StageStyle;
 import models.DB;
 import models.Post;
 import models.User;
@@ -66,6 +67,7 @@ public class PostCellData {
 
     public void setInfo(Post post)
     {
+        setListeners(post);
 
         User sender = DB.getUser(post.getSenderUsername());
 
@@ -75,13 +77,41 @@ public class PostCellData {
         postText.setMaxWidth(View.getScreenWidth()/3);
 
         userName.setText("@"+post.getSenderUsername());
+
+        gridPane.setPrefHeight(View.getScreenHeight()/5 + postText.getHeight() + imageRec.getHeight());
+
+        profilePic.setImage(Utility.decodeImageFile(DB.getUser(post.getSenderUsername()).getProfilePicture()));
+
+        if (DB.isLikedBy(View.getLoggedInUser().getUserName(),post.getID()))
+            like.setImage(new Image(getClass().getResource("/pics/liked.png").toExternalForm()));
+
+
+
+
+    }
+
+    private void setListeners(Post post) {
+        like.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                Dialog dialog = controller.handleLikingPost(post.getID());
+                if (dialog == Dialog.MESSAGE_LIKE_REMOVED)
+                    like.setImage(new Image(getClass().getResource("/pics/notLiked.png").toExternalForm()));
+                else if (dialog == Dialog.MESSAGE_LIKED)
+                    like.setImage(new Image(getClass().getResource("/pics/liked.png").toExternalForm()));
+            }
+        });
+        comment.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                addComment(post);
+            }
+        });
         if (!post.getImage().equals("-1")) {
             Image postImage = Utility.decodeImageFile(post.getImage());
             imageRec.setFill(new ImagePattern(postImage));
             setImageRecSize(postImage.getWidth(), postImage.getHeight(), imageRec, 0.4);
         }
-
-        gridPane.setPrefHeight(View.getScreenHeight()/5 + postText.getHeight() + imageRec.getHeight());
 
         if (!post.getParentID().equals("-1")){
             replyingTo.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -94,31 +124,18 @@ public class PostCellData {
             String parentUserName = DB.getUser(DB.getPost(post.getParentID()).getSenderUsername()).getUserName();
             replyID.setText("@"+parentUserName);
         }
-
-        profilePic.setImage(Utility.decodeImageFile(DB.getUser(post.getSenderUsername()).getProfilePicture()));
-
-        if (DB.isLikedBy(View.getLoggedInUser().getUserName(),post.getID()))
-            like.setImage(new Image(getClass().getResource("/pics/liked.png").toExternalForm()));
-
-        like.setOnMousePressed(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-            Dialog dialog = controller.handleLikingPost(post.getID());
-            if (dialog == Dialog.MESSAGE_LIKE_REMOVED)
-                like.setImage(new Image(getClass().getResource("/pics/notLiked.png").toExternalForm()));
-            else if (dialog == Dialog.MESSAGE_LIKED)
-                like.setImage(new Image(getClass().getResource("/pics/liked.png").toExternalForm()));
-
-            }
-        });
-        comment.setOnMousePressed(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-
-            }
-        });
     }
-private void setImageRecSize(double imageWidth, double imageHeight, Rectangle rectangle,double widthPortion){
+
+    private void addComment(Post post) {
+            TweetView controller = new TweetView();
+            controller.setParentID(post.getID());
+            javafx.scene.control.Dialog dialog = new javafx.scene.control.Dialog();
+            dialog.getDialogPane().setContent(controller.getContent());
+            dialog.initStyle(StageStyle.TRANSPARENT);
+            dialog.show();
+    }
+
+    private void setImageRecSize(double imageWidth, double imageHeight, Rectangle rectangle,double widthPortion){
 
     imageRec.setArcHeight(50);imageRec.setArcWidth(50);
     imageRec.setEffect(new DropShadow(5, Color.GRAY));  // Shadow

@@ -39,7 +39,6 @@ public abstract class Utility {
                     return images.get("-1");
                 else {
                     Image image = new Image(Utility.class.getResource("/pics/profile.jpg").toString());
-                    System.out.println("base");
                     images.put("-1",image);
                     return image;
                 }

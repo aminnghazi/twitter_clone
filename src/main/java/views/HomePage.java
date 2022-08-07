@@ -1,26 +1,23 @@
 package views;
 
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Dialog;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import models.DB;
 
 import java.io.IOException;
 
 public class HomePage extends View{
     public GridPane homePage;
-    public VBox middleContainer;
     public VBox userContainer;
+    public VBox middleContainer;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -37,6 +34,15 @@ public class HomePage extends View{
     public void initialize(){
         loadPostsView();
         loadUsersView();
+//        loadChatsView();
+//        loadChatView();
+//        userContainer.setOnMouseClicked(new EventHandler<MouseEvent>() {
+//            @Override
+//            public void handle(MouseEvent event) {
+//                if (chatsView != null)
+//                    recipient = chatsView.getRecipient();
+//            }
+//        });
     }
 
     private void loadPostsView(){
@@ -52,50 +58,31 @@ public class HomePage extends View{
         userContainer.getChildren().add(usersView.getStackPane());
     }
 
+    private void loadChatsView() {
+        ChatsView chatsView = new ChatsView(middleContainer);
+        userContainer.getChildren().clear();
+        userContainer.getChildren().add(chatsView.getStackPane());
+    }
+
+
+
     public void homeClicked(MouseEvent mouseEvent) {
         loadPostsView();
         loadUsersView();
     }
 
     public void tweetButtonClicked(MouseEvent mouseEvent) {
-        // TODO: 8/1/2022 change to correct format insteadof pane
-        try {
-            GridPane tweetView = FXMLLoader.load(this.getClass().getResource("/fxml/tweet-view.fxml"));
+            TweetView controller = new TweetView();
             Dialog dialog = new Dialog();
-            dialog.getDialogPane().setContent(tweetView);
+            dialog.getDialogPane().setContent(controller.getContent());
             dialog.initStyle(StageStyle.TRANSPARENT);
             dialog.show();
-//            middleContainer.getChildren().clear();
-//            middleContainer.getChildren().add(parent);
-        } catch (IOException e) {
-            System.out.println("couldnt load tweet page");
-            e.printStackTrace();
-        }
     }
 
 
     public void messageBtnClicked(MouseEvent mouseEvent) {
-        loadChatView();//loading chat view
         loadChatsView();//loading list of chats you have
     }
-    private void loadChatView(){
-        try {
-            GridPane gridPane = FXMLLoader.load(this.getClass().getResource("/fxml/chat-view.fxml"));
-            middleContainer.getChildren().clear();
-            middleContainer.getChildren().add(gridPane);
-        } catch (IOException e) {
-            System.out.println("could not load chat view");
-            e.printStackTrace();
-        }
 
-    }
-    private void loadChatsView() {
-        try {
-            StackPane stackPane = FXMLLoader.load(this.getClass().getResource("/fxml/chats-view.fxml"));
-            userContainer.getChildren().clear();
-            userContainer.getChildren().add(stackPane);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+
 }

@@ -1,0 +1,17 @@
+.list-view {
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+}
+.list-cell,.list-cell:focused{
+    -fx-background-color: #a4a4a4;
+    -fx-start-margin: 1 1 1 1;
+    -fx-cursor: POINTER;
+    -fx-background-insets: 0 ;
+}
+.list-cell:hover {
+    -fx-background-color: #9d6f6f;
+}
+
+.list-cell:empty{
+    -fx-background-color: transparent;
+}

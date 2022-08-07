@@ -54,6 +54,7 @@ public class DB {
 //            user.setProfilePicture(resultSet.getString("ProfilePicture"));
         }catch (SQLException e) {
 //            e.printStackTrace();
+            System.out.println(e);
         }
         return user;
     }
@@ -392,31 +393,32 @@ public class DB {
         }
         return dates;
     }
-    public static Dialog createGroup(String groupID, String ownerID, String groupName, boolean isGroup){
+    public static Dialog createGroup(String groupID, String ownerID, String groupName, boolean isGroup,String image){
         int a;
         if (isGroup == true)
             a=1;
         else
             a=0;
         try {
-            statement.executeUpdate("INSERT INTO group (GroupID,OwnerID,CreateDate,GroupName,isGroup) " +
+            statement.executeUpdate("INSERT INTO groups (GroupID,OwnerID,CreateDate,GroupName,isGroup,image) " +
                     "VALUES ('"
                     +groupID+"','"
                     +ownerID+"','"
                     +Timestamp.from(Instant.now())+"','"//kal
-                    +groupName+"',"
-                    +a
+                    +groupName+"','"
+                    +a+"','"
+                    +image+"'"
                     +")");
             return Dialog.SUCCESS;
         } catch (SQLException e) {
-//            e.printStackTrace();
+            e.printStackTrace();
             return Dialog.OPERATION_FAILED;
         }
     }
     public static String getGroupName(String groupID){
         String groupName = "";
         try {
-            ResultSet resultSet = statement.executeQuery("SELECT GroupName FROM group WHERE GroupID='"+groupID+"'");
+            ResultSet resultSet = statement.executeQuery("SELECT GroupName FROM groups WHERE GroupID='"+groupID+"'");
             resultSet.next();
             groupName = resultSet.getString("GroupName");
         } catch (SQLException e) {
@@ -426,7 +428,7 @@ public class DB {
     }
     public static Dialog changeGroupName(String groupID, String newGroupName){
         try {
-            statement.executeUpdate("UPDATE group SET GroupName='"+newGroupName+"' WHERE GroupID='"+groupID+"'");
+            statement.executeUpdate("UPDATE groups SET GroupName='"+newGroupName+"' WHERE GroupID='"+groupID+"'");
             return Dialog.SUCCESS;
         } catch (SQLException e) {
 //            e.printStackTrace();
@@ -436,7 +438,7 @@ public class DB {
     public static boolean isGroup(String groupID){//kal
         boolean is = false;
         try {
-            ResultSet resultSet = statement.executeQuery("SELECT isGroup FROM group WHERE GroupID='"+groupID+"'");
+            ResultSet resultSet = statement.executeQuery("SELECT isGroup FROM groups WHERE GroupID='"+groupID+"'");
             resultSet.next();
             is = resultSet.getBoolean("isGroup");
         } catch (SQLException e) {
@@ -445,23 +447,27 @@ public class DB {
         return is;
     }
     public static Dialog addMember(String groupID, String memberID, boolean isAdmin){
+        int a = 0;
+        if (isAdmin)
+            a=1;
+
         try {
-            statement.executeUpdate("INSERT INTO group (GroupID,MemberID,JoinDate,isAdmin) " +
+            statement.executeUpdate("INSERT INTO members (GroupID,MemberID,JoinDate,isAdmin) " +
                     "VALUES ('"
                     +groupID+"','"
                     +memberID+"','"
                     +Timestamp.from(Instant.now())+"','"//kal
-                    +isAdmin
+                    +a
                     +"')");
             return Dialog.SUCCESS;
         } catch (SQLException e) {
-//            e.printStackTrace();
+            e.printStackTrace();
             return Dialog.OPERATION_FAILED;
         }
     }
     public static Dialog deleteMember(String groupID, String memberID){
         try {
-            statement.executeUpdate("DELETE FROM member WHERE GroupID='"+groupID+"' AND MemberID='"+memberID+"'");
+            statement.executeUpdate("DELETE FROM members WHERE GroupID='"+groupID+"' AND MemberID='"+memberID+"'");
             return Dialog.SUCCESS;
         } catch (SQLException e) {
 //            e.printStackTrace();
@@ -471,7 +477,7 @@ public class DB {
     public static ArrayList<String> getGroups(String userName){
         ArrayList<String> groups = new ArrayList<>();
         try {
-            ResultSet resultSet = statement.executeQuery("SELECT GroupID FROM group WHERE MemberID='"+userName+"'");//kal
+            ResultSet resultSet = statement.executeQuery("SELECT GroupID FROM members WHERE MemberID='"+userName+"'");//kal
             while (resultSet.next()){
                 groups.add(resultSet.getString("GroupID"));
             }
@@ -480,10 +486,21 @@ public class DB {
         }
         return groups;
     }
+    public static String getGroupImage(String groupID) {
+        String image = "-1";
+        try {
+            ResultSet resultSet = statement.executeQuery("SELECT image FROM groups WHERE GroupID='"+groupID+"'");//kal
+            resultSet.next();
+            image = resultSet.getString("image");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return image;
+    }
     public static ArrayList<String> getMembers(String groupID, Statement statement){
         ArrayList<String> members = new ArrayList<>();
         try {
-            ResultSet resultSet = statement.executeQuery("SELECT MemberID FROM group WHERE GroupID='"+groupID+"'");//kal
+            ResultSet resultSet = statement.executeQuery("SELECT MemberID FROM groups WHERE GroupID='"+groupID+"'");//kal
             while (resultSet.next()){
                 members.add(resultSet.getString("MemberID"));
             }
@@ -512,12 +529,14 @@ public class DB {
     public static ArrayList<Message> getMessages(String chatID){
         ArrayList<Message> messages = new ArrayList<>();
         try {
-            ResultSet resultSet = statement.executeQuery("SELECT GroupID FROM message WHERE GroupID='"+chatID+"'");//kal
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM message WHERE GroupID='"+chatID+"'");//kal
             while (resultSet.next()){
                 Message message = new Message(resultSet.getString("SenderID"),
                         resultSet.getString("PhotoMessage"),resultSet.getString("Text"),
                         resultSet.getString("GroupID"));
-                Timestamp ts = new Timestamp(resultSet.getDate("GroupID").getTime());
+                Timestamp ts = new Timestamp(resultSet.getDate("SentDate").getTime());
+                message.setDateCreated(ts);
+                messages.add(message);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -596,4 +615,6 @@ public class DB {
         }
         return Dialog.OPERATION_FAILED;
     }
+
+
 }

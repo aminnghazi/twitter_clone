@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
 
-<GridPane prefHeight="1620.0" prefWidth="1872.0" stylesheets="@../CSS/custom.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.ChatView">
+<GridPane fx:id="gridPane" prefHeight="1620.0" prefWidth="1872.0" stylesheets="@../CSS/custom.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
    </columnConstraints>
@@ -18,10 +18,11 @@
    <children>
       <HBox prefHeight="100.0" prefWidth="200.0">
          <children>
-            <Ellipse fill="DODGERBLUE" radiusX="31.0" radiusY="31.0" stroke="TRANSPARENT" strokeType="INSIDE">
+            <Circle fx:id="profile" fill="DODGERBLUE" radius="31.0" stroke="BLACK" strokeType="INSIDE">
                <HBox.margin>
                   <Insets bottom="2.0" left="10.0" top="10.0" />
-               </HBox.margin></Ellipse>
+               </HBox.margin>
+            </Circle>
             <VBox>
                <children>
                   <Label fx:id="name" styleClass="label-big-bold" text="name family name" />
@@ -37,17 +38,17 @@
          <children>
             <Button fx:id="image" mnemonicParsing="false" styleClass="btn-image-circular">
                <graphic>
-                  <ImageView fitHeight="44.0" fitWidth="44.0" onMouseClicked="#galleryButtonClicked" pickOnBounds="true" preserveRatio="true" styleClass="btn-iamger-circular">
+                  <ImageView fitHeight="44.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true" styleClass="btn-iamger-circular">
                      <image>
                         <Image url="@../pics/gallery.png" />
                      </image>
                   </ImageView>
                </graphic>
             </Button>
-            <TextField onKeyPressed="#keyPressed" prefHeight="55.0" prefWidth="474.0" HBox.hgrow="SOMETIMES" />
+            <TextField fx:id="text" prefHeight="55.0" prefWidth="474.0" HBox.hgrow="SOMETIMES" />
             <Button fx:id="send" mnemonicParsing="false" styleClass="btn-image-circular">
                <graphic>
-                  <ImageView fitHeight="44.0" fitWidth="44.0" onMouseClicked="#sendClicked" pickOnBounds="true" preserveRatio="true" styleClass="btn">
+                  <ImageView fitHeight="44.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true" styleClass="btn">
                      <image>
                         <Image url="@../pics/send.png" />
                      </image>
@@ -56,5 +57,6 @@
             </Button>
          </children>
       </HBox>
+      <ListView fx:id="listView" prefHeight="200.0" prefWidth="200.0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
    </children>
 </GridPane>

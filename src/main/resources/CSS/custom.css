@@ -78,3 +78,65 @@
 .image-clickable:hover{
     -fx-effect: dropshadow(gaussian, rgb(26, 122, 125), 10, 0.5, 0.0, 0.0);
 }
+.message-cell-right{
+    -fx-background-color: #4b7da7;
+    -fx-background-radius: 30px;
+}
+.message-cell-right:hover{
+    -fx-background-color: #426c8e;
+
+}
+.message-cell-left{
+    -fx-background-color: #696969;
+    -fx-background-radius: 30px;
+
+}
+.message-cell-left:hover{
+    -fx-background-color: #585858;
+}
+
+
+
+.button-blue{
+    -fx-background-color: rgb(18, 122, 214);
+    -fx-background-radius: 10px;
+}
+.button-blue:hover{
+    -fx-background-color: rgb(25, 102, 170);
+}
+
+/*.button:focused {*/
+/*    -fx-border-width: 1.3px;*/
+/*}*/
+
+.button:hover {
+    -fx-background-color: rgb(174, 174, 174);
+}
+
+/*.button:pressed {*/
+/*    -fx-scale-y: 0.98;*/
+/*    -fx-scale-x: 0.98;*/
+/*}*/
+
+/*!* Default Button *!*/
+/*.button:default {*/
+/*    -fx-background-color: rgb(18, 122, 214);*/
+/*    -fx-text-fill: white;*/
+/*    -fx-border-width: 0px;*/
+/*}*/
+
+/*.button:default:hover {*/
+/*    -fx-background-color: rgb(16, 110, 190);*/
+/*}*/
+
+/*.button:default:focused {}*/
+.backGround-gray-gradient {
+    -fx-background-color:
+            linear-gradient(#9d9daf, #6d6f80),
+                /*repeating-image-pattern("/pics/stars.png"),*/
+            radial-gradient(center 50% 50%, radius 50%, rgba(255, 255, 255, 0.2), #00000033);
+
+    -fx-focus-color: transparent;
+}
+
+
