@@ -72,4 +72,10 @@ public abstract class View extends Application {
         }
     }
 
+    public static String getStyleClass(){
+        if (theme == 1)
+            return "/CSS/custom.css/";
+        else
+            return "/CSS/custom-dark.css";
+    }
 }
