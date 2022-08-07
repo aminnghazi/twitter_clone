@@ -3,15 +3,28 @@
     -fx-border-width: 0;
 }
 .list-cell,.list-cell:focused{
-    -fx-background-color: #a4a4a4;
+    -fx-background-color: #ffffff;
     -fx-start-margin: 1 1 1 1;
     -fx-cursor: POINTER;
     -fx-background-insets: 0 ;
 }
 .list-cell:hover {
-    -fx-background-color: #9d6f6f;
+    -fx-background-color: #cacaca;
+    -fx-cursor: hand;
+
 }
 
 .list-cell:empty{
     -fx-background-color: transparent;
 }
+.list-view .scroll-bar:horizontal {
+    -fx-scale-y: 0;
+}
+.backGround-solid-white{
+    -fx-background-color: #e2dcdc;
+}
+/*.dialog{*/
+/*    -fx-background-color: #e2dcdc;*/
+/*    -fx-background-radius: 100px;*/
+
+/*}*/

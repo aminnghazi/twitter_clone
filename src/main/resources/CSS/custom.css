@@ -1,3 +1,10 @@
+.root {
+    -fx-background-color: #FFFFFF;
+    -fx-font-family: Segoe UI;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
 .linktext{
 
 }
@@ -137,6 +144,47 @@
             radial-gradient(center 50% 50%, radius 50%, rgba(255, 255, 255, 0.2), #00000033);
 
     -fx-focus-color: transparent;
+}
+
+.btn-cstm{
+    -fx-background-radius: 80;
+    /*-fx-border-radius: 30;*/
+    /*-fx-background-color: ;*/
+}
+.btn-cstm:hover{
+    -fx-background-color: #9e9e9e;
+}
+.btn-cstm:pressed{
+    -fx-background-color: #848282;
+    -fx-scale-x: 99%;
+}
+
+.tweet-button {
+    -fx-background-radius: 80;
+    -fx-background-color: #1f8ee3;
+    -fx-cursor: hand;
+
+}
+.tweet-button:hover{
+    -fx-background-color: #1f85cd;
+
+}
+.scroll-bar {
+    -fx-background-radius: 0;
+    -fx-background-color: transparent !important;
+    -fx-pref-width: 9;
+}
+
+.scroll-bar:hover {
+    -fx-background-radius: 0;
+    -fx-background-color: #bdbdbd !important;
+    -fx-pref-width: 16;
+}
+.round-corner{
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+    -fx-background-color: firebrick;
+    -fx-padding: 10px;
+    -fx-background-radius: 60px;
 }
 
 

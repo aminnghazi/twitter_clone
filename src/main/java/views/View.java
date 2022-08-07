@@ -15,6 +15,8 @@ public abstract class View extends Application {
     private static double screenWidth=1920;
     private static double screenHeight=1080;
 
+    public static int theme=1;
+
     public static double getScreenWidth() {
         return screenWidth;
     }

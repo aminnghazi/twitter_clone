@@ -85,4 +85,13 @@ public class HomePage extends View{
     }
 
 
+    public void themeClicked(MouseEvent mouseEvent) {
+    if (View.theme == 1)
+        View.theme = 0;
+    if (View.theme == 0)
+        View.theme = 1;
+    }
+
+    public void logOutClicked(MouseEvent mouseEvent) {
+    }
 }

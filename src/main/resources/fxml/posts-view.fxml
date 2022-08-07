@@ -5,9 +5,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<StackPane fx:id="stackPane" prefHeight="2000.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane fx:id="stackPane" prefHeight="2000.0" prefWidth="1000.0" stylesheets="@../CSS/custom.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ListView fx:id="listView" editable="true">
+      <ListView fx:id="listView" editable="true" stylesheets="@../CSS/listView.css">
          <StackPane.margin>
             <Insets />
          </StackPane.margin>
