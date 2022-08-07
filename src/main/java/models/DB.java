@@ -44,7 +44,7 @@ public class DB {
         User user = null;
         try{
             ResultSet  resultSet = statement.executeQuery("SELECT*FROM user WHERE UserName='"+userName+"'");
-            resultSet.next();
+            if (resultSet.next()){
             user = new User(resultSet.getString("UserName"), resultSet.getString("Password"), resultSet.getString("securityQuestionType"),
                     resultSet.getString("securityQuestionAnswer"),resultSet.getBoolean("Business"),resultSet.getString("ProfilePicture"),
                     resultSet.getString("FirstName"),resultSet.getString("LastName"));
@@ -52,9 +52,10 @@ public class DB {
             user.setJoinDate(ts);//kal
             user.setBirthDate(resultSet.getDate("BirthDate").toLocalDate());
 //            user.setProfilePicture(resultSet.getString("ProfilePicture"));
+            }
         }catch (SQLException e) {
-//            e.printStackTrace();
-            System.out.println(e);
+            e.printStackTrace();
+//            System.out.println(e);
         }
         return user;
     }
@@ -522,14 +523,14 @@ public class DB {
                     +"')");// TODO: 7/30/2022 may be wrong
             return Dialog.SUCCESS;
         } catch (SQLException e) {
-//            e.printStackTrace();
+            e.printStackTrace();
             return Dialog.OPERATION_FAILED;
         }
     }
     public static ArrayList<Message> getMessages(String chatID){
         ArrayList<Message> messages = new ArrayList<>();
         try {
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM message WHERE GroupID='"+chatID+"'");//kal
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM message WHERE GroupID='"+chatID+"'ORDER BY SentDate ASC");//kal
             while (resultSet.next()){
                 Message message = new Message(resultSet.getString("SenderID"),
                         resultSet.getString("PhotoMessage"),resultSet.getString("Text"),

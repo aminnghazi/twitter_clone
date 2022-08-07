@@ -13,7 +13,7 @@ public class ChatViewController {
         if (text == null || text.equals(""))
             return Dialog.EMPTY_TEXT;
         if (receiverID.contains("#"))
-            return DB.addMessage(receiverID,senderID,image,text);
+            return DB.addMessage("@" + receiverID,senderID,image,text);
         String groupID;
         int order = senderID.compareTo(receiverID);
         if (order >= 0){
@@ -26,16 +26,20 @@ public class ChatViewController {
     }
     public ArrayList<Message> getMessages(String receiverID, String senderID){
         String groupId;
-        if (receiverID.equals("-1"))
-            groupId = "@" + View.getLoggedInUser().getUserName()+"&"+"-1";
-        else{
-            int order = senderID.compareTo(receiverID);
-            if (order >= 0){
-                groupId = "@" + senderID + "&" + receiverID;
+        if (!receiverID.contains("#")){
+            if (receiverID.equals("-1"))
+                groupId = "@" + View.getLoggedInUser().getUserName()+"&"+"-1";
+            else{
+                int order = senderID.compareTo(receiverID);
+                if (order >= 0){
+                    groupId = "@" + senderID + "&" + receiverID;
+                }
+                else {
+                    groupId = "@" + receiverID + "&" + senderID;
+                }
             }
-            else {
-                groupId = "@" + receiverID + "&" + senderID;
-            } 
+        }else {
+            groupId = "@" + receiverID;
         }
         // TODO: 8/6/2022 group 
 //        else if (senderID == null)
