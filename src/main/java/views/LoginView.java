@@ -19,7 +19,7 @@ public class LoginView {//controller of login-view.fxml
     public PasswordField password;
     public TextField userName;
     public Label error;
-    boolean testMode = true;
+    boolean testMode = false;
 
     public void loginClicked(MouseEvent mouseEvent) {
         if (testMode) {

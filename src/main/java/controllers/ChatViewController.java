@@ -12,6 +12,8 @@ public class ChatViewController {
     public Dialog sendMessage(String senderID, String receiverID, String text , String image){
         if (text == null || text.equals(""))
             return Dialog.EMPTY_TEXT;
+        if (receiverID.contains("#"))
+            return DB.addMessage(receiverID,senderID,image,text);
         String groupID;
         int order = senderID.compareTo(receiverID);
         if (order >= 0){
