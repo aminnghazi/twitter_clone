@@ -7,7 +7,7 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<GridPane fx:id="gridPane" prefHeight="600.0" prefWidth="600.0" styleClass="post" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane fx:id="gridPane" prefHeight="600.0" prefWidth="600.0" styleClass="post" stylesheets="@../CSS/custom.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="10.0" prefWidth="100.0" />
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
@@ -56,14 +56,14 @@
                <children>
                   <VBox fx:id="vbox">
                      <children>
-                        <Label fx:id="postText" text="Label" wrapText="true">
+                        <Label fx:id="postText" styleClass="label-normal-bold" text="Label" wrapText="true">
                            <font>
                               <Font name="Microsoft Sans Serif" size="20.0" />
                            </font>
                         </Label>
                         <HBox alignment="CENTER" VBox.vgrow="SOMETIMES">
                            <children>
-                              <Rectangle fx:id="imageRec" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="200.0" stroke="BLACK" strokeType="INSIDE" />
+                              <Rectangle fx:id="imageRec" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="200.0" stroke="TRANSPARENT" strokeType="INSIDE" />
                            </children>
                            <VBox.margin>
                               <Insets top="20.0" />

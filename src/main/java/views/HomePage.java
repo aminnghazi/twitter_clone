@@ -93,5 +93,6 @@ public class HomePage extends View{
     }
 
     public void logOutClicked(MouseEvent mouseEvent) {
+        System.exit(0);
     }
 }

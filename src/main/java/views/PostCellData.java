@@ -72,8 +72,11 @@ public class PostCellData {
         User sender = DB.getUser(post.getSenderUsername());
 
         name.setText(sender.getFirstName() + " " + sender.getLastName());
+        if (post.isAd())
+            postText.setText("(ad)" + post.getText());
+        else
+            postText.setText(post.getText());
 
-        postText.setText(post.getText());
         postText.setMaxWidth(View.getScreenWidth()/3);
 
         userName.setText("@"+post.getSenderUsername());
@@ -137,8 +140,8 @@ public class PostCellData {
 
     private void setImageRecSize(double imageWidth, double imageHeight, Rectangle rectangle,double widthPortion){
 
-    imageRec.setArcHeight(50);imageRec.setArcWidth(50);
-    imageRec.setEffect(new DropShadow(5, Color.GRAY));  // Shadow
+    imageRec.setArcHeight(30);imageRec.setArcWidth(30);
+    imageRec.setEffect(new DropShadow(1, Color.GRAY));  // Shadow
 
     double scale = widthPortion * View.getScreenWidth()/imageWidth ;
         imageRec.setWidth(imageWidth*scale);
