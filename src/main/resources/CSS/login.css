@@ -29,6 +29,17 @@
     -fx-scale-x: 95%;
 }
 
+.button:hover{
+    /*-fx-border-style: ;*/
+    -fx-background-color: rgba(146, 114, 228, 0.65);
+    -fx-scale-x: 95%;
+}
+
+.button-theme {
+    /*-fx-background-color: rgba(165, 155, 155, 0.76);*/
+    -fx-background-radius: 40;
+    -fx-text-fill: #d1d1d1;
+}
 
 
 .rounded {

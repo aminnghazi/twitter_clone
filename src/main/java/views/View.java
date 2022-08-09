@@ -78,4 +78,10 @@ public abstract class View extends Application {
         else
             return "/CSS/custom-dark.css";
     }
+    public static String getStyleClass_List(){
+        if (theme == 1)
+            return "/CSS/listView.css/";
+        else
+            return "/CSS/listView-dark.css";
+    }
 }

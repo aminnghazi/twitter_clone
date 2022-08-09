@@ -50,7 +50,20 @@
          <GridPane.margin>
             <Insets bottom="5.0" left="20.0" right="20.0" />
          </GridPane.margin></Button>
-      <Label alignment="CENTER" styleClass="title" text="Login " GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+      <HBox alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1">
+         <children>
+            <Label alignment="CENTER" styleClass="title" text="Login " />
+            <Button fx:id="themeBtn" mnemonicParsing="false" onMouseClicked="#changeTheme" prefHeight="27.0" prefWidth="40.0" style="-fx-background-color: white;" styleClass="button-theme" stylesheets="@../CSS/login.css">
+               <graphic>
+                  <ImageView fitHeight="28.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../pics/theme.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </children>
+      </HBox>
       <Button fx:id="signUpBtn" blendMode="SRC_ATOP" layoutX="238.0" layoutY="283.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#signUp" styleClass="button" text="Don't have an account?Create one" textFill="antiquewhite" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="6" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS">
          <GridPane.margin>
             <Insets left="20.0" right="20.0" top="5.0" />

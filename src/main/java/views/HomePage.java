@@ -32,6 +32,9 @@ public class HomePage extends View{
         primaryStage.setMaximized(true);
     }
     public void initialize(){
+        homePage.getStylesheets().clear();
+//        homePage.getStylesheets().add("/CSS/custom-dark.css");
+        homePage.getStylesheets().add((View.getStyleClass()));
         loadPostsView();
         loadUsersView();
 //        loadChatsView();
@@ -85,12 +88,7 @@ public class HomePage extends View{
     }
 
 
-    public void themeClicked(MouseEvent mouseEvent) {
-    if (View.theme == 1)
-        View.theme = 0;
-    if (View.theme == 0)
-        View.theme = 1;
-    }
+
 
     public void logOutClicked(MouseEvent mouseEvent) {
         System.exit(0);

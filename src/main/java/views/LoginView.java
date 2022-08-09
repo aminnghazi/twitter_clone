@@ -2,7 +2,9 @@ package views;
 
 import controllers.LoginPageController;
 import enums.Dialog;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -19,7 +21,8 @@ public class LoginView {//controller of login-view.fxml
     public PasswordField password;
     public TextField userName;
     public Label error;
-    boolean testMode = false;
+    public Button themeBtn;
+    boolean testMode = true;
 
     public void loginClicked(MouseEvent mouseEvent) {
         if (testMode) {
@@ -59,6 +62,20 @@ public class LoginView {//controller of login-view.fxml
             dialog.show();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void changeTheme(MouseEvent event) {
+//        themeBtn.getStyleClass().clear();
+        if (View.theme == 1) {
+            themeBtn.setStyle("-fx-background-color: rgb(92,92,92);");
+            View.theme = 0;
+            return;
+        }
+        if (View.theme == 0) {
+            themeBtn.setStyle("-fx-background-color: white;");
+            View.theme = 1;
+            return;
         }
     }
 }

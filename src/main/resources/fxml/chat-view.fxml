@@ -36,16 +36,8 @@
       </HBox>
       <HBox prefHeight="100.0" prefWidth="200.0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
          <children>
-            <Button fx:id="image" mnemonicParsing="false" styleClass="btn-image-circular">
-               <graphic>
-                  <ImageView fitHeight="44.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true" styleClass="btn-iamger-circular">
-                     <image>
-                        <Image url="@../pics/gallery.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <TextField fx:id="text" prefHeight="55.0" prefWidth="474.0" HBox.hgrow="SOMETIMES" />
+            <Button fx:id="image" mnemonicParsing="false" styleClass="btn-image-circular" />
+            <TextField fx:id="text" prefHeight="55.0" prefWidth="474.0" styleClass="text-area" HBox.hgrow="SOMETIMES" />
             <Button fx:id="send" mnemonicParsing="false" styleClass="btn-image-circular">
                <graphic>
                   <ImageView fitHeight="44.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true" styleClass="btn">

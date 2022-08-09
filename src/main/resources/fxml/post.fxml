@@ -37,7 +37,7 @@
          <children>
             <HBox>
                <children>
-                  <Label fx:id="name" text="Name Family Name">
+                  <Label fx:id="name" styleClass="label-big-bold" text="Name Family Name">
                      <font>
                         <Font name="Segoe UI Bold" size="17.0" />
                      </font>

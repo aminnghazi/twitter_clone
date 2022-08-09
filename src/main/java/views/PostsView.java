@@ -55,6 +55,10 @@ public class PostsView  implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        listView.getStylesheets().clear();
+        listView.getStylesheets().add(View.getStyleClass_List());
+        stackPane.getStylesheets().clear();
+        stackPane.getStylesheets().add(View.getStyleClass());
         fillPosts();
         listView.setCellFactory(new Callback<ListView<Post>, ListCell<Post>>() {
             @Override

@@ -1,10 +1,20 @@
 .root{
     /*-fx-background-radius: 100px;*/
-    -fx-background-color: #555555;
+    -fx-background-color:             linear-gradient(#777676, #494949),
+        /*repeating-image-pattern("/pics/stars.png"),*/
+    radial-gradient(center 50% 50%, radius 50%, rgba(255, 255, 255, 0.2), #00000033);;
+}
+.backGround-gray-gradient {
+    -fx-background-color:
+            linear-gradient(#9d9daf, #6d6f80),
+                /*repeating-image-pattern("/pics/stars.png"),*/
+            radial-gradient(center 50% 50%, radius 50%, rgba(255, 255, 255, 0.2), #00000033);
+
+    -fx-focus-color: transparent;
 }
 .text-area{
     -fx-text-fill: #000000;
-    text-area-background: #717171;
+    text-area-background: rgba(118, 118, 118, 0.18);
     -fx-font-family: sans-serif , "Segoe UI";
     -fx-font-size: 18;
 }

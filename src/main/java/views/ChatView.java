@@ -61,6 +61,8 @@ public class ChatView implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources){
+        listView.getStylesheets().clear();
+        listView.getStylesheets().add(View.getStyleClass_List());
         //setting up list view
         fillMessages();
         listView.setCellFactory(new Callback<ListView<Message>, ListCell<Message>>() {

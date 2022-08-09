@@ -46,6 +46,8 @@ public class UsersView implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        listView.getStylesheets().clear();
+        listView.getStylesheets().add(View.getStyleClass_List());
         fillUsers();
         listView.setCellFactory(new Callback<ListView<Card>, ListCell<Card>>() {
             @Override

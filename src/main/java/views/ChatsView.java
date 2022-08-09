@@ -56,6 +56,10 @@ public class ChatsView implements Initializable {
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        stackPane.getStylesheets().clear();
+        stackPane.getStylesheets().add(View.getStyleClass());
+        listView.getStylesheets().clear();
+        listView.getStylesheets().add(View.getStyleClass_List());
         fillChatsListView();
         loadChatView();
         listView.setCellFactory(new Callback<ListView<Card>, ListCell<Card>>() {
